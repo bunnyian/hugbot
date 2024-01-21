@@ -52,40 +52,38 @@ void loop() {
   if (Serial.available() > 0) {
     incomingByte = Serial.read();
     int value = incomingByte - '0';
-
-    int timeUntilBlink = random(1000);
     
     // if user has a sad/disgusted/angry expression
     if (value == 0) {
       // lcd.print("hug time :(");
       drawPleadingFace();
-      delay(timeUntilBlink);
+      // delay(timeUtilBlink);
       blinkEyes();
-      delay(200);
+      // delay(200);
+      delay (500);
       drawPleadingFace();
-      delay(800-timeUntilBlink);
+      delay (300);
+      // delay(800-timeUntilBlink);
     }
 
     // if user has a neutral expression or if user is not detected
     else if (value == 1) {
       // lcd.print(":/");
       drawNeutralFace();
-      delay(timeUntilBlink);
       blinkEyes();
-      delay(200);
+      delay(500);
       drawNeutralFace();
-      delay(800-timeUntilBlink);
+      delay(300);
     } 
 
     // if user has a happy/surprised expression
     else if (value == 2) {
       // lcd.print("dancy time");
       drawHappyFace();
-      delay(timeUntilBlink);
       blinkEyes();
-      delay(200);
+      delay(500);
       drawHappyFace();
-      delay(800-timeUntilBlink);
+      delay(300);
     } 
 }
 
@@ -146,18 +144,21 @@ void drawHappyFace(){
 }
 
 void blinkEyes(){
-  // // Clear eyes (apparently this is faster than doing lcd.clear()
-  // lcd.setCursor(0, 0);
-  // lcd.write("               ");
+  // only blink eyes 33% of the time to make it more natual
+  int blinkChance = random(3);
+  // if (blinkChance==2){ 
+  if (blinkChance<10){ 
+    // Clear eyes 
+    lcd.setCursor(0, 0);
+    lcd.write("               ");
 
-  lcd.clear();
+    // Display blinking left eye
+    lcd.setCursor(4, 0);
+    lcd.write("u");
 
-  // Display blinking left eye
-  lcd.setCursor(4, 0);
-  lcd.write("u");
-
-  // Display blinking right eye
-  lcd.setCursor(10, 0);
-  lcd.write("u");
-  lcd.setCursor(0, 0);  
+    // Display blinking right eye
+    lcd.setCursor(10, 0);
+    lcd.write("u");
+    lcd.setCursor(0, 0);  
+  } 
 }

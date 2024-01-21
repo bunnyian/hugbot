@@ -38,13 +38,23 @@ def needs_hug():
         if len(emotions)!=0:
             buffer.append(emotions[0])
             if len(buffer) == 10:
-                if buffer.count('happy') + buffer.count('neutral') < 5:
-                    print('sending a')
+                state_0_count = buffer.count('sad') + buffer.count('disgust') + buffer.count('angry')
+                state_1_count = buffer.count('neutral') 
+                state_2_count = buffer.count('happy') + buffer.count('surprise') 
+
+
+                # if buffer.count('happy') + buffer.count('neutral') < 5:
+                if (max(state_0_count, state_1_count, state_2_count) == state_0_count):
+                    print('sending a!')
                     ser.write(b'0') # user is sad/disgusted/angry
                     buffer.clear()
-                else:
+                elif (max(state_0_count, state_1_count, state_2_count) == state_1_count):
                     print('sending b!')
                     ser.write(b'1') # user is neutral / not in frame
+                    buffer.clear()
+                else:
+                    print('sending c!')
+                    ser.write(b'2')
                     buffer.clear()
         
         if cv2.waitKey(1) &0xFF == ord('q'):

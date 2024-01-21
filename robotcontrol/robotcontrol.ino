@@ -45,8 +45,8 @@ const long READ_BYTE_INTERVAL =
     75; // how long to wait in between reading incoming bytes (in milliseconds)
 const long STATE_DURATION = 4000; // how long to lock in the current state (in milliseconds), so that the hugging or propeller actions have enough time to complete
 const long BLINK_INTERVAL =
-    5001; // how long to wait in between blinks (in milliseconds)
-const long BLINK_DURATION = 200;  // duration for which to keep eyes closed during a blink (in milliseconds)
+    2001; // how long to wait in between blinks (in milliseconds)
+const long BLINK_DURATION = 400;  // duration for which to keep eyes closed during a blink (in milliseconds)
 
 
 void setup() {
@@ -103,41 +103,41 @@ void loop() {
       drawPleadingFace(horizontalOffsetValue);
       hugUser();
 
-      // just for debugging
-      lcd.setCursor(0, 1);
-      lcd.write("a");
+      // // just for debugging
+      // lcd.setCursor(0, 1);
+      // lcd.write("a");
     } else if (lockedInStateValue == 1) { // user is neutral or not found in the frame
       drawNeutralFace(horizontalOffsetValue);
 
-      // just for debugging
-      lcd.setCursor(0, 1);
-      lcd.write("b");
+      // // just for debugging
+      // lcd.setCursor(0, 1);
+      // lcd.write("b");
     } else if (lockedInStateValue == 2) { // user is happy/surprised
       drawHappyFace(horizontalOffsetValue);
       spinPropeller();
 
-      // just for debugging
-      lcd.setCursor(0, 1);
-      lcd.write("c");
+      // // just for debugging
+      // lcd.setCursor(0, 1);
+      // lcd.write("c");
     }
 
-    // just for debugging
-    lcd.setCursor(1, 1);
-    if (horizontalOffsetValue == -3) {
-      lcd.write("a");
-    } else if (horizontalOffsetValue == -2) {
-      lcd.write("b");
-    } else if (horizontalOffsetValue == -1) {
-      lcd.write("c");
-    } else if (horizontalOffsetValue == 0) {
-      lcd.write("d");
-    } else if (horizontalOffsetValue == 1) {
-      lcd.write("e");
-    } else if (horizontalOffsetValue == 2) {
-      lcd.write("f");
-    } else if (horizontalOffsetValue == 3) {
-      lcd.write("g");
-    }
+    // // just for debugging
+    // lcd.setCursor(1, 1);
+    // if (horizontalOffsetValue == -3) {
+    //   lcd.write("a");
+    // } else if (horizontalOffsetValue == -2) {
+    //   lcd.write("b");
+    // } else if (horizontalOffsetValue == -1) {
+    //   lcd.write("c");
+    // } else if (horizontalOffsetValue == 0) {
+    //   lcd.write("d");
+    // } else if (horizontalOffsetValue == 1) {
+    //   lcd.write("e");
+    // } else if (horizontalOffsetValue == 2) {
+    //   lcd.write("f");
+    // } else if (horizontalOffsetValue == 3) {
+    //   lcd.write("g");
+    // }
     
   }
 
@@ -224,8 +224,7 @@ void drawHappyFace(int myHorizontalOffsetValue){
 void closeEyes(int myHorizontalOffsetValue){
   // only blink eyes 75% of the time, to make it more natural
   int blinkChance = random(4);
-  if (blinkChance > 10){  // i.e, never blink
-  // if (blinkChance != 0){  // i.e, the 75% chance of blinking occured
+  if (blinkChance != 0){  // i.e, the 75% chance of blinking occured
     // clear eyes 
     lcd.setCursor(0, 0);
     lcd.write("               ");
@@ -237,7 +236,7 @@ void closeEyes(int myHorizontalOffsetValue){
     // display closed right eye
     lcd.setCursor(10+myHorizontalOffsetValue, 0);
     lcd.write("u");
-    lcd.setCursor(0, 0); // can I delete this line?
+    // lcd.setCursor(0, 0); // can I delete this line?
     }
 }
 

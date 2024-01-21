@@ -4,57 +4,52 @@
 const int rs = 12, en = 11, d4 = 5, d5 = 4, d6 = 3, d7 = 2;
 LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
 
-// define the pleading eye special characters
+// define special characters for drawing the pleading eyes
 byte pleadingEyeLeftHalf[8] = {
-B00111,
-B01000,
-B10000,
-B10000,
-B10000,
-B11000,
-B01100,
-B00111
+  B00111,
+  B01000,
+  B10000,
+  B10000,
+  B10000,
+  B11000,
+  B01100,
+  B00111
 };
 
 byte pleadingEyeRightHalf[8] = {
-B10000,
-B11000,
-B01100,
-B01100,
-B01100,
-B01000,
-B10000,
-B10000
+  B10000,
+  B11000,
+  B01100,
+  B01100,
+  B01100,
+  B01000,
+  B10000,
+  B10000
 };
 
-const int ledPin =  LED_BUILTIN; // set the number of the LED pin
-
-int stateByte;
-int horizontalPositionByte;
-
-int stateValue; // 0 = sad/disgusted/angry, 1 = neutral, 2 = happy/surprised
-int horizontalOffsetValue; // from -3 to 3, where -3 is far left and 3 is far right
-bool currentlyEyesClosed = false; // whether eyes are currently closed
+int recievedStateValue; // 0 = sad/disgusted/angry, 1 = neutral, 2 = happy/surprised. This is the value that is read from the incoming byte
+int lockedInStateValue; // 0 = sad/disgusted/angry, 1 = neutral, 2 =
+                        // happy/surprised. This is the value that is locked in so that we can safely take longer actions like hugging or spinning the propeller.
+int horizontalPositionByte; // from 0 to 6, where 0 is far left and 6 is far right.
+int horizontalOffsetValue;  // from -3 to 3, where -3 is far left and 3 is far
+                           // right. 
+bool eyesCurrentlyClosed = false; // whether eyes are currently closed
 
 unsigned long currentMillis = 0; // stores current time (in milliseconds)
-     
-unsigned long previousReadStateMillis = 0;  // stores last time state was read (in milliseconds)
+unsigned long previousReadByteMillis = 0; // stores last time byte was read (in
+                                          // milliseconds)
+unsigned long previousStateLockedMillis = 0;  // stores last time state was locked (in milliseconds)
 unsigned long previousBlinkStartedMillis = 0; // stores last time eyes were closed (in milliseconds)
 
-// const long READ_STATE_INTERVAL = 4000; // how long to wait in between reading incoming state (in milliseconds)
-const long READ_STATE_INTERVAL = 500; // how long to wait in between reading incoming state (in milliseconds)
+const long READ_BYTE_INTERVAL =
+    500; // how long to wait in between reading incoming bytes (in milliseconds)
+const long STATE_DURATION = 10000; // how long to lock in the current state (in milliseconds), so that the hugging or propeller actions have enough time to complete
 const long BLINK_INTERVAL =
     5001; // how long to wait in between blinks (in milliseconds)
 const long BLINK_DURATION = 200;  // duration for which to keep eyes closed during a blink (in milliseconds)
 
-// define variables for serial communication
-int incomingStateByte = 0;
-
 
 void setup() {
-  // initialize digital pin LED_BUILTIN as an output.
-  pinMode(ledPin, OUTPUT);
-
   // initialize random seed (for blinking eyes randomly)
   randomSeed(analogRead(0));
 
@@ -65,112 +60,104 @@ void setup() {
   // set up the LCD's dimensions:
   lcd.begin(16, 2);
 
-  // set data rate for serial communication
+  // set baud rate for serial communication
   Serial.begin(9600);
 }
 
-
-// the loop function runs over and over again forever
 void loop() {
-
   // store the current time (in milliseconds)
   currentMillis = millis(); 
 
-  // check if it's time to read incoming state
-  if (currentMillis - previousReadStateMillis >= READ_STATE_INTERVAL) {
-    // save the last time we read the incoming state
-    previousReadStateMillis = currentMillis;
+  // check if it's time to read the incoming byte
+  if (currentMillis - previousReadByteMillis >= READ_BYTE_INTERVAL) {
+    // save the last time we read the incoming byte
+    previousReadByteMillis = currentMillis;
 
-    // // read the incoming state byte
-    // incomingStateByte = Serial.read();
-    // stateValue = incomingStateByte - '0';
-
+    // read the incoming byte
     byte incomingByte = Serial.read();
 
     // decode the byte
-    int stateByte =
+    recievedStateValue =
         (incomingByte >> 5) & 0x03; // Shift right 5 bits and mask with 0x03 to
                                     // get the last 2 bits
-    int horizontalPositionByte =
+    horizontalPositionByte =
         incomingByte & 0x07; // Mask with 0x07 to get the last 3 bits
 
-    // stateValue = stateByte - '0';
-    stateValue = stateByte;
+    // calculate the horizontal offset of the eyes
     horizontalOffsetValue = horizontalPositionByte - 3;
 
-   
+    // lock in the current state so that actions like propeller spinning and hugging can complete properly.
+    if (currentMillis - previousStateLockedMillis >= STATE_DURATION) {
+      previousStateLockedMillis = currentMillis;
 
-    // lcd.setCursor(8, 1);
-    // lcd.write(stateValue);
-    // Serial.println(stateValue);
-    
+      lockedInStateValue = recievedStateValue;
+    }
+      
     // take the appropriate actions based on the state
-    if (stateValue == 0) { // user is sad/disgusted/angry
+    if (lockedInStateValue == 0) { // user is sad/disgusted/angry
       drawPleadingFace(horizontalOffsetValue);
       hugUser();
 
-      // just for debugging
-      lcd.setCursor(0, 1);
-      lcd.write("a");
-    } else if (stateValue == 1) { // user is neutral or not found in the frame
+      // // just for debugging
+      // lcd.setCursor(0, 1);
+      // lcd.write("a");
+    } else if (lockedInStateValue == 1) { // user is neutral or not found in the frame
       drawNeutralFace(horizontalOffsetValue);
 
-      // just for debugging
-      lcd.setCursor(0, 1);
-      lcd.write("b");
-    } else if (stateValue == 2) { // user is happy/surprised
+      // // just for debugging
+      // lcd.setCursor(0, 1);
+      // lcd.write("b");
+    } else if (lockedInStateValue == 2) { // user is happy/surprised
       drawHappyFace(horizontalOffsetValue);
       spinPropeller();
 
-      // just for debugging
-      lcd.setCursor(0, 1);
-      lcd.write("c");
+      // // just for debugging
+      // lcd.setCursor(0, 1);
+      // lcd.write("c");
     }
 
-    // just for debugging
-    lcd.setCursor(1, 1);
-    if (horizontalOffsetValue == -3) {
-      lcd.write("a");
-    } else if (horizontalOffsetValue == -2) {
-      lcd.write("b");
-    } else if (horizontalOffsetValue == -1) {
-      lcd.write("c");
-    } else if (horizontalOffsetValue == 0) {
-      lcd.write("d");
-    } else if (horizontalOffsetValue == 1) {
-      lcd.write("e");
-    } else if (horizontalOffsetValue == 2) {
-      lcd.write("f");
-    } else if (horizontalOffsetValue == 3) {
-      lcd.write("g");
-    }
-  
-
+    // // just for debugging
+    // lcd.setCursor(1, 1);
+    // if (horizontalOffsetValue == -3) {
+    //   lcd.write("a");
+    // } else if (horizontalOffsetValue == -2) {
+    //   lcd.write("b");
+    // } else if (horizontalOffsetValue == -1) {
+    //   lcd.write("c");
+    // } else if (horizontalOffsetValue == 0) {
+    //   lcd.write("d");
+    // } else if (horizontalOffsetValue == 1) {
+    //   lcd.write("e");
+    // } else if (horizontalOffsetValue == 2) {
+    //   lcd.write("f");
+    // } else if (horizontalOffsetValue == 3) {
+    //   lcd.write("g");
+    // }
     
   }
 
   // check if it's time to close eyes for a blink
-  if ((currentMillis - previousBlinkStartedMillis >= BLINK_INTERVAL) && (!currentlyEyesClosed)) {
+  if ((currentMillis - previousBlinkStartedMillis >= BLINK_INTERVAL) && (!eyesCurrentlyClosed)) {
     // save the last time we closed eyes
     previousBlinkStartedMillis = currentMillis;
     closeEyes();
 
-    currentlyEyesClosed = true;
+    eyesCurrentlyClosed = true;
   }
 
   // check if it's time to reopen eyes after the blink
-  if ((currentMillis - previousBlinkStartedMillis >= BLINK_DURATION) && (currentlyEyesClosed)) {
+  if ((currentMillis - previousBlinkStartedMillis >= BLINK_DURATION) && (eyesCurrentlyClosed)) {
 
     // redraw the face based on the current state
-    if (stateValue == 0) {
+    if (lockedInStateValue == 0) {
       drawPleadingFace(horizontalOffsetValue);
-    } else if (stateValue == 1) {
+    } else if (lockedInStateValue == 1) {
       drawNeutralFace(horizontalOffsetValue);
-    } else if (stateValue == 2) {
+    } else if (lockedInStateValue == 2) {
       drawHappyFace(horizontalOffsetValue);
     }
 
-    currentlyEyesClosed = false;
+    eyesCurrentlyClosed = false;
   }
 }
 
@@ -249,10 +236,12 @@ void closeEyes(){
     }
 }
 
-void hugUser() {
+// the following two functions are currently set to take 4000 ms each to complete. if you need more time, just go to line 46 and increase the STATE_DURATION value!
+
+void hugUser() { 
   // activate arm motors to hug user
 }
 
-void spinPropeller() {
+void spinPropeller() { 
   // activate propellor motor to spin propeller
 }

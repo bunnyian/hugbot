@@ -92,9 +92,7 @@ void loop() {
     }
   }
 
-
-
-  // check to see if it's time to close eyes for a blink
+  // check if it's time to close eyes for a blink
   if ((currentMillis - previousBlinkStartedMillis >= BLINK_INTERVAL) && (!currentlyEyesClosed)) {
     // save the last time we closed eyes
     previousBlinkStartedMillis = currentMillis;
@@ -103,7 +101,7 @@ void loop() {
     currentlyEyesClosed = true;
   }
 
-  // check to see if it's time to reopen eyes after the blink
+  // check if it's time to reopen eyes after the blink
   if ((currentMillis - previousBlinkStartedMillis >= BLINK_DURATION) && (currentlyEyesClosed)) {
 
     // redraw the face based on the current state
@@ -194,4 +192,10 @@ void closeEyes(){
     }
 }
 
-void hugUser(){}
+void hugUser() {
+  // move arms to hug user
+}
+
+void spinPropeller() {
+  // spin propeller
+}

@@ -1,7 +1,8 @@
 X get hello world printed on lcd
 X get one-row heart eyes printed on lcd
-O [10min] get two-row 😍 face printed on lcd (for when user is happy)
--- [10min] compress 12 byte heart to 8 bytes.
+X [10min] get two-row 😍 face printed on lcd (for when user is happy)
+X- [10min] compress 12 byte heart to 8 bytes.
+O [5min] add a little mouth uwu
 - [10min] get two-row ^_^ faace printed on lcd (for when user is neutral)
 - [10min] get two-row 🥺 face printed on lcd (for when user is sad/angry)
 - [15min] integrate with robotcontrol.io

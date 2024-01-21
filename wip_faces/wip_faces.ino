@@ -265,22 +265,22 @@ void setup() {
 
 
 
-  // // Display plead left eye
-  // lcd.setCursor(3, 0);
-  // lcd.write(byte(0));
-  // lcd.setCursor(4, 0);
-  // lcd.write(byte(1));
+  // Display plead left eye
+  lcd.setCursor(3, 0);
+  lcd.write(byte(0));
+  lcd.setCursor(4, 0);
+  lcd.write(byte(1));
  
 
-  // // Display plead right eye
-  // lcd.setCursor(10, 0);
-  // lcd.write(byte(0));
-  // lcd.setCursor(11, 0);
-  // lcd.write(byte(1));
+  // Display plead right eye
+  lcd.setCursor(10, 0);
+  lcd.write(byte(0));
+  lcd.setCursor(11, 0);
+  lcd.write(byte(1));
 
 
 
-
+// prob wont end up using the heart eyes but I wanna keep it here just in case 
 //   // Display heart left eye
 //   lcd.setCursor(1, 0);
 //   lcd.write(byte(0));
@@ -322,27 +322,30 @@ void setup() {
 //   lcd.write(byte(7));
 
 
+// // for tracking offset!
 //  Serial.begin(9600);
 }
 
 void loop() {
-  // Add code here for any dynamic behavior (optional)
-  if (Serial.available() > 0) {
-    eyes_offset = Serial.parseInt(); // Read the serial input
-  }
-  // Clear the top row
-  lcd.setCursor(0,0);
-  lcd.print("                ");
+  // // for adding offset:
 
-  // Display neutral left eye
-  lcd.setCursor(4+eyes_offset, 0);
-  lcd.write(".");
+  // // Add code here for any dynamic behavior (optional)
+  // if (Serial.available() > 0) {
+  //   eyes_offset = Serial.parseInt(); // Read the serial input
+  // }
+  // // Clear the top row
+  // lcd.setCursor(0,0);
+  // lcd.print("                ");
 
-  // Display neutral right eye
-  lcd.setCursor(10+eyes_offset, 0);
-  lcd.write(".");
+  // // Display neutral left eye
+  // lcd.setCursor(4+eyes_offset, 0);
+  // lcd.write(".");
 
-  delay(1);
+  // // Display neutral right eye
+  // lcd.setCursor(10+eyes_offset, 0);
+  // lcd.write(".");
+
+  // delay(1);
   
 }
 

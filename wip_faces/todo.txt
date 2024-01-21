@@ -6,10 +6,9 @@ X [5min] add a little mouth uwu
 X [10min] get one-row  •w• face printed on lcd (for when user is neutral)
 X [10min] get one-row 4byte 🥺 face printed on lcd (for when user is sad/angry)
 X [2min] replace 😍 face with one-row ^w^ (for when user is happy)
-- [15min] integrate with robotcontrol.io
+O [15min] integrate with robotcontrol.io
 
-- [15min] create a blink animation that goes off every now and then and overrides the current face's eyes (clear screen, redraw "w" mouth, redraw eyes as "u" (with offset))
+- [5min] create a blink animation that goes off every now and then and overrides the current face's eyes (clear screen, redraw "w" mouth, redraw eyes as "u" (with offset))
 X [5min] print eyes with a given horizontal offset 
--- [10min] consider making the eye slide not absolute (like .w   .)
 - [15min] output horizontal position of largest bounding box from facial detection
 - [15min] implement horizontal tracking of eyes

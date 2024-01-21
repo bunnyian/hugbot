@@ -9,7 +9,7 @@ void setup() {
   pinMode(LED_BUILTIN, OUTPUT);
 
   lcd.begin(16, 2);
-  
+
   Serial.begin(9600);
 }
 
@@ -24,13 +24,13 @@ void loop() {
   if (Serial.available() > 0) {
     incomingByte = Serial.read();
     int value = incomingByte - '0';
-    
+
     if (value == 0) {
       lcd.clear();
       lcd.print("hug time :(");
       delay(1000);
     }
-      
+
     else if (value == 1) {
       lcd.clear();
       lcd.print(":/");

@@ -4,7 +4,7 @@ const int rs = 12, en = 11, d4 = 5, d5 = 4, d6 = 3, d7 = 2;
 LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
 
 // define the pleading eye special characters
-byte pleadTop1[8] = {
+byte pleadingEyeLeftHalf[8] = {
 B00111,
 B01000,
 B10000,
@@ -15,7 +15,7 @@ B01100,
 B00111
 };
 
-byte pleadTop2[8] = {
+byte pleadingEyeRightHalf[8] = {
 B10000,
 B11000,
 B01100,
@@ -32,8 +32,8 @@ void setup() {
   pinMode(LED_BUILTIN, OUTPUT);
 
   // create the pleading eye special characters
-  lcd.createChar(0, pleadTop1);
-  lcd.createChar(1, pleadTop2);
+  lcd.createChar(0, pleadingEyeLeftHalf);
+  lcd.createChar(1, pleadingEyeRightHalf);
 
   lcd.begin(16, 2);
 
@@ -50,14 +50,15 @@ void loop() {
     incomingByte = Serial.read();
     int value = incomingByte - '0';
 
-    // if user is has a sad/disgusted/angry expression
+    // if user has a sad/disgusted/angry expression
     if (value == 0) {
       lcd.clear();
+      // lcd.print("hug time :(");
       drawPleadingFace();
       delay(1000);
     }
 
-    // if user is has a neutral expression or if user is not detected
+    // if user has a neutral expression or if user is not detected
     else if (value == 1) {
       lcd.clear();
       // lcd.print(":/");
@@ -65,7 +66,7 @@ void loop() {
       delay(1000);
     } 
 
-    // if user is has a happy/surprised expression
+    // if user has a happy/surprised expression
     else if (value == 2) {
       lcd.clear();
       // lcd.print("dancy time");
@@ -97,7 +98,7 @@ void drawPleadingFace(){
 
 
 void drawNeutralFace(){
-  // Display happy mouth
+  // Display smiling mouth
   lcd.setCursor(7, 1);
   lcd.write("w"); 
 
@@ -111,7 +112,7 @@ void drawNeutralFace(){
 }
 
 void drawHappyFace(){
-  // Display happy mouth
+  // Display smiling mouth
   lcd.setCursor(7, 1);
   lcd.write("w"); 
 

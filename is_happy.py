@@ -8,12 +8,12 @@ from collections import deque
 
 import serial
 
-ser = serial.Serial('/dev/tty.usbmodem2101', 9600) #the team arduino 
-# ser = serial.Serial('/dev/cu.usbmodem1101', 9600) #anoop's arduino (just for testing)
+# ser = serial.Serial('/dev/tty.usbmodem2101', 9600) #the team arduino 
+ser = serial.Serial('/dev/cu.usbmodem1101', 9600) #anoop's arduino (just for testing)
 
 def send_data(state_index, horizontal_position):
     # Ensure the values are within the correct range
-    if 0 <= state_index <= 2 and 0 <= horizontal_position <= 6:
+    if (0 <= state_index <= 2) and (0 <= horizontal_position <= 6):
         # Encoding: assuming value1 uses the upper 3 bits and value2 uses the lower 5 bits
         encoded_byte = (state_index << 5) | horizontal_position
         ser.write(bytes([encoded_byte]))
@@ -22,6 +22,9 @@ def send_data(state_index, horizontal_position):
 
 
 def needs_hug():
+    the_state = 1
+    horizontal_position = 3
+
     buffer = deque(maxlen=10)
 # instanciar detector
     Detector = fed.predict_emotions()
@@ -39,7 +42,7 @@ def needs_hug():
         if len(emotions)!=0:
             img_post = fed.bounding_box(im,boxes_face,emotions)
             horizontal_position = int(((boxes_face[0][0] + boxes_face[0][2]) / 1400)*7)
-            print(horizontal_position)
+            # print(horizontal_position - 3)
         else:
             img_post = im 
 
@@ -54,23 +57,34 @@ def needs_hug():
                 state_1_count = buffer.count('neutral') 
                 state_2_count = buffer.count('happy') + buffer.count('surprise') 
 
+                
+                # print(horizontal_position - 3)    
+
 
                 if (max(state_0_count, state_1_count, state_2_count) == state_0_count):
-                    print('sending a!')
+                    # print('sending a!')
                     # ser.write(b'0') # user is sad/disgusted/angry
-                    send_data(0, horizontal_position)
+                    # send_data(0, horizontal_position)
+                    the_state = 0
+                    # time.sleep(1)
                     buffer.clear()
                 elif (max(state_0_count, state_1_count, state_2_count) == state_1_count):
-                    print('sending b!')
+                    # print('sending b!')
                     # ser.write(b'1') # user is neutral / not in frame
-                    send_data(1, horizontal_position)
+                    # send_data(1, horizontal_position)
+                    the_state = 1
+                    # time.sleep(1)
                     buffer.clear()
                 else:
-                    print('sending c!')
+                    # print('sending c!')
                     # ser.write(b'2')
-                    send_data(2, horizontal_position)
+                    # send_data(2, horizontal_position)
+                    the_state = 2
+                    # time.sleep(1)
                     buffer.clear()
         
+        send_data(the_state, horizontal_position)
+        print(the_state, horizontal_position)
         if cv2.waitKey(1) &0xFF == ord('q'):
             break
 

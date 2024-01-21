@@ -8,7 +8,8 @@ from collections import deque
 
 import serial
 
-ser = serial.Serial('/dev/tty.usbmodem2101', 9600) #the team arduino 
+ser = serial.Serial('/dev/tty.usbserial-210', 9600) #the team arduino
+ser2 = serial.Serial('/dev/tty.usbmodem1101', 9600) #the team arduino 
 # ser = serial.Serial('/dev/cu.usbmodem1101', 9600) #anoop's arduino (just for testing)
 
 def send_data(state_index, horizontal_position):
@@ -17,6 +18,7 @@ def send_data(state_index, horizontal_position):
         # Encoding: assuming value1 uses the upper 3 bits and value2 uses the lower 5 bits
         encoded_byte = (state_index << 5) | horizontal_position
         ser.write(bytes([encoded_byte]))
+        ser2.write(bytes([encoded_byte]))
     else:
         print("Values out of range")
 

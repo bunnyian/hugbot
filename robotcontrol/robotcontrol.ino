@@ -25,18 +25,21 @@ void loop() {
     incomingByte = Serial.read();
     int value = incomingByte - '0';
 
+    // if user is has a sad/disgusted/angry expression
     if (value == 0) {
       lcd.clear();
       lcd.print("hug time :(");
       delay(1000);
     }
 
+    // if user is has a neutral expression or if user is not detected
     else if (value == 1) {
       lcd.clear();
       lcd.print(":/");
       delay(1000);
     } 
 
+    // if user is has a happy/surprised expression
     else if (value == 2) {
       lcd.clear();
       lcd.print("dancy time");

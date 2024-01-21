@@ -5,18 +5,17 @@ import time
 
 
 #basic test program
-# ser = serial.Serial('/dev/tty.usbmodem2101', 9600) #team arduino
+# ser = serial.Serial('/dev/tty.usbmodem2101', 9600) #team arduino 
 ser = serial.Serial('/dev/cu.usbmodem1101', 9600) #anoop's arduino (just for testing)
 
 while True:
-    # ser.write(b'0')
-    # time.sleep(1)
-    # ser.write(b'1')
-    # time.sleep(1)
+    ser.write(b'0')
+    time.sleep(1)
+    ser.write(b'1')
+    time.sleep(1)
     ser.write(b'2')
     time.sleep(1) 
     print('sent')
-
     
     # yabal yabal yabal yabal 
     #yabal in korean means "i'm tired"

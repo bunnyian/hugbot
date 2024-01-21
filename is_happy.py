@@ -39,11 +39,11 @@ def needs_hug():
             buffer.append(emotions[0])
             if len(buffer) == 10:
                 if buffer.count('happy') + buffer.count('neutral') < 5:
-                    print('Needs a hug')
+                    print('sending a')
                     ser.write(b'0') # user is sad/disgusted/angry
                     buffer.clear()
                 else:
-                    print('Neutral!')
+                    print('sending b!')
                     ser.write(b'1') # user is neutral / not in frame
                     buffer.clear()
         

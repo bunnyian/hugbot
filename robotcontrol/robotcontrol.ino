@@ -37,7 +37,8 @@ unsigned long currentMillis = 0; // stores current time (in milliseconds)
 unsigned long previousReadStateMillis = 0;  // stores last time state was read (in milliseconds)
 unsigned long previousBlinkStartedMillis = 0; // stores last time eyes were closed (in milliseconds)
 
-const long READ_STATE_INTERVAL = 4000; // how long to wait in between reading incoming state (in milliseconds)
+// const long READ_STATE_INTERVAL = 4000; // how long to wait in between reading incoming state (in milliseconds)
+const long READ_STATE_INTERVAL = 500; // how long to wait in between reading incoming state (in milliseconds)
 const long BLINK_INTERVAL =
     5001; // how long to wait in between blinks (in milliseconds)
 const long BLINK_DURATION = 200;  // duration for which to keep eyes closed during a blink (in milliseconds)

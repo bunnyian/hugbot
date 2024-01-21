@@ -224,8 +224,8 @@ void drawHappyFace(int myHorizontalOffsetValue){
 void closeEyes(int myHorizontalOffsetValue){
   // only blink eyes 75% of the time, to make it more natural
   int blinkChance = random(4);
-  if (blinkChance > 10){  // i.e, never blink
-  // if (blinkChance != 0){  // i.e, the 75% chance of blinking occured
+  // if (blinkChance > 10){  // i.e, never blink
+  if (blinkChance != 0){  // i.e, the 75% chance of blinking occured
     // clear eyes 
     lcd.setCursor(0, 0);
     lcd.write("               ");
@@ -237,7 +237,7 @@ void closeEyes(int myHorizontalOffsetValue){
     // display closed right eye
     lcd.setCursor(10+myHorizontalOffsetValue, 0);
     lcd.write("u");
-    lcd.setCursor(0, 0); // can I delete this line?
+    // lcd.setCursor(0, 0); // can I delete this line?
     }
 }
 

@@ -52,6 +52,9 @@ if type_input == 'webcam':
         else:
             img_post = im 
 
+
+
+        print(emotions[0])
         end_time = time.time() - star_time    
         FPS = 1/end_time
         cv2.putText(im,f"FPS: {round(FPS,3)}",(10,50),cv2.FONT_HERSHEY_COMPLEX,1,(0,0,255),2)

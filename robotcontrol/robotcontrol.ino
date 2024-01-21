@@ -26,29 +26,6 @@ B10000,
 B10000
 };
 
-byte pleadTop3[8] = {
-B11111,
-B11111,
-B11111,
-B11111,
-B11111,
-B11111,
-B11111,
-B11111
-};
-
-byte pleadTop4[8] = {
-B11111,
-B11111,
-B11111,
-B11111,
-B11111,
-B11111,
-B11111,
-B11111
-};
-
-
 // the setup function runs once when you press reset or power the board
 void setup() {
   // initialize digital pin LED_BUILTIN as an output.
@@ -57,8 +34,6 @@ void setup() {
   // create the pleading eye special characters
   lcd.createChar(0, pleadTop1);
   lcd.createChar(1, pleadTop2);
-  lcd.createChar(2, pleadTop3);
-  lcd.createChar(3, pleadTop4);
 
   lcd.begin(16, 2);
 
@@ -66,8 +41,6 @@ void setup() {
 }
 
 int incomingByte = 0;
-
-
 
 // the loop function runs over and over again forever
 void loop() {
@@ -81,21 +54,7 @@ void loop() {
     if (value == 0) {
       lcd.clear();
 
-      // Display frowning mouth
-      lcd.setCursor(7, 1);
-      lcd.write("n");
-
-      // Display pleading left eye
-      lcd.setCursor(3, 0);
-      lcd.write(byte(0));
-      lcd.setCursor(4, 0);
-      lcd.write(byte(1));
-    
-      // Display pleading right eye
-      lcd.setCursor(10, 0);
-      lcd.write(byte(0));
-      lcd.setCursor(11, 0);
-      lcd.write(byte(1));
+      drawPleadingFace();
 
       delay(1000);
     }
@@ -116,4 +75,22 @@ void loop() {
   }
 
   delay(4000);
+}
+
+void drawPleadingFace(){
+    // Display frowning mouth
+    lcd.setCursor(7, 1);
+    lcd.write("n");
+
+    // Display pleading left eye
+    lcd.setCursor(3, 0);
+    lcd.write(byte(0));
+    lcd.setCursor(4, 0);
+    lcd.write(byte(1));
+  
+    // Display pleading right eye
+    lcd.setCursor(10, 0);
+    lcd.write(byte(0));
+    lcd.setCursor(11, 0);
+    lcd.write(byte(1));
 }

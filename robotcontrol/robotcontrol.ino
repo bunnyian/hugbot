@@ -57,11 +57,11 @@ void loop() {
     if (value == 0) {
       // lcd.print("hug time :(");
       drawPleadingFace();
-      delay (400);
+      delay(400);
       blinkEyes();
-      delay (200);
+      delay(200);
       drawPleadingFace();
-      delay (400);
+      delay(400);
     }
 
     // if user has a neutral expression or if user is not detected
@@ -70,7 +70,7 @@ void loop() {
       drawNeutralFace();
       delay(400);
       blinkEyes();
-      delay (200);
+      delay(200);
       drawNeutralFace();
       delay(400);
     } 
@@ -81,7 +81,7 @@ void loop() {
       drawHappyFace();
       delay(400);
       blinkEyes();
-      delay (200);
+      delay(200);
       drawHappyFace();
       delay(400);
     } 

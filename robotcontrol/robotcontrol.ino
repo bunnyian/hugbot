@@ -1,4 +1,5 @@
 #include <LiquidCrystal.h>
+#include <Stepper.h>
 
 // initialize the lcd library with the numbers of the interface pins
 const int rs = 12, en = 11, d4 = 5, d5 = 4, d6 = 3, d7 = 2;
@@ -51,6 +52,14 @@ const long BLINK_INTERVAL =
     2001; // how long to wait in between blinks (in milliseconds)
 const long BLINK_DURATION = 400;  // duration for which to keep eyes closed during a blink (in milliseconds)
 
+const int stepsPerRevolution = 2038;
+Stepper stepperL = Stepper(stepsPerRevolution, 8, 10, 9, 13);
+Stepper stepperR = Stepper(stepsPerRevolution, 8, 10, 9, 13);
+
+bool isHugging = false;
+unsigned long hugStartTime = 0;
+enum HugStep { START, RIGHT_ARM_IN, LEFT_ARM_IN, RIGHT_ARM_OUT, LEFT_ARM_OUT, END };
+HugStep hugStep = START;
 
 void setup() {
   // initialize random seed (for blinking eyes randomly)
@@ -172,6 +181,51 @@ void loop() {
 
     eyesCurrentlyClosed = false;
   }
+
+
+
+    if (isHugging) {
+    unsigned long currentTime = millis();
+    switch (hugStep) {
+      case START:
+        hugStep = RIGHT_ARM_IN;
+        // Fall through to the next case
+      case RIGHT_ARM_IN:
+        if (currentTime - hugStartTime >= 1000) { // Assuming 1000 ms for each step
+          rightArmIn();
+          hugStep = LEFT_ARM_IN;
+          hugStartTime = currentTime;
+        }
+        break;
+      case LEFT_ARM_IN:
+        if (currentTime - hugStartTime >= 1000) {
+          leftArmIn();
+          hugStep = RIGHT_ARM_OUT;
+          hugStartTime = currentTime;
+        }
+        break;
+      case RIGHT_ARM_OUT:
+        if (currentTime - hugStartTime >= 1000) {
+          rightArmOut();
+          hugStep = LEFT_ARM_OUT;
+          hugStartTime = currentTime;
+        }
+        break;
+      case LEFT_ARM_OUT:
+        if (currentTime - hugStartTime >= 1000) {
+          leftArmOut();
+          hugStep = END;
+          hugStartTime = currentTime;
+        }
+        break;
+      case END:
+        if (currentTime - hugStartTime >= 1000) {
+          isHugging = false;
+        }
+        break;
+    }
+
+
 }
 
 void drawPleadingFace(int myHorizontalOffsetValue) {
@@ -244,12 +298,50 @@ void closeEyes(int myHorizontalOffsetValue){
     // display closed right eye
     lcd.setCursor(10+myHorizontalOffsetValue, 0);
     lcd.write("u");
-    }
+    // lcd.setCursor(0, 0); // can I delete this line?
+  }
+
+  
 }
 
 // the following two functions are currently set to take 4000 ms each to complete. if you need more time, just go to line 46 and increase the STATE_DURATION value!
 
+
+void leftArmIn() {
+  stepperL.setSpeed(10);
+  stepperL.step(stepsPerRevolution / 2000); // Assuming 1000 steps for the full movement
+    // delay(2000);
+}
+
+void leftArmOut() {
+  // curve left arm outwards
+  stepperL.setSpeed(10);
+  stepperL.step(-stepsPerRevolution / 1000); // Assuming 1000 steps for the full movemen
+}
+
+void rightArmIn() {
+  // curve right arm inwards
+  stepperR.setSpeed(10);
+  stepperR.step(stepsPerRevolution / 1000); // Assuming 1000 steps for the full movemen
+}
+
+void rightArmOut() {
+  // curve right arm outwards
+  stepperR.setSpeed(10);
+  stepperR.step(-stepsPerRevolution/1000);
+    // delay(1000);
+}
+
 void hugUser() {
+  // activate arm motors to hug user
+    if (!isHugging) {
+      isHugging = true;
+      hugStep = START;
+      hugStartTime = millis();
+    }
+
+
+  
   // activate arm motors to hug user
   // lcd.setCursor(1, 0);
   // lcd.print(currentMillis - previousStateLockedMillis / 1000);

@@ -29,7 +29,11 @@ B10000
 
 const int ledPin =  LED_BUILTIN; // set the number of the LED pin
 
+int stateByte;
+int horizontalPositionByte;
+
 int stateValue; // 0 = sad/disgusted/angry, 1 = neutral, 2 = happy/surprised
+int horizontalOffsetValue; // from -3 to 3, where -3 is far left and 3 is far right
 bool currentlyEyesClosed = false; // whether eyes are currently closed
 
 unsigned long currentMillis = 0; // stores current time (in milliseconds)
@@ -77,9 +81,22 @@ void loop() {
     // save the last time we read the incoming state
     previousReadStateMillis = currentMillis;
 
-    // read the incoming state byte
-    incomingStateByte = Serial.read();
-    stateValue = incomingStateByte - '0';
+    // // read the incoming state byte
+    // incomingStateByte = Serial.read();
+    // stateValue = incomingStateByte - '0';
+
+    byte incomingByte = Serial.read();
+
+    // decode the byte
+    int stateByte =
+        (incomingByte >> 5) & 0x03; // Shift right 5 bits and mask with 0x03 to
+                                    // get the last 2 bits
+    int horizontalPositionByte =
+        incomingByte & 0x07; // Mask with 0x07 to get the last 3 bits
+
+    // stateValue = stateByte - '0';
+    stateValue = stateByte;
+    horizontalOffsetValue = horizontalPositionByte - 3;
 
     // lcd.setCursor(8, 1);
     // lcd.write(stateValue);

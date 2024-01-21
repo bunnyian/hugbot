@@ -28,8 +28,8 @@ def needs_hug():
         # visualizacion
         if len(emotions)!=0:
             img_post = fed.bounding_box(im,boxes_face,emotions)
-            offset = int(((boxes_face[0][0] + boxes_face[0][2]) / 1400)*7) - 3
-            print(offset)
+            horizontal_position = int(((boxes_face[0][0] + boxes_face[0][2]) / 1400)*7)
+            print(horizontal_position)
         else:
             img_post = im 
 
@@ -47,21 +47,33 @@ def needs_hug():
 
                 if (max(state_0_count, state_1_count, state_2_count) == state_0_count):
                     print('sending a!')
-                    ser.write(b'0') # user is sad/disgusted/angry
+                    # ser.write(b'0') # user is sad/disgusted/angry
+                    send_data(0, horizontal_position)
                     buffer.clear()
                 elif (max(state_0_count, state_1_count, state_2_count) == state_1_count):
                     print('sending b!')
-                    ser.write(b'1') # user is neutral / not in frame
+                    # ser.write(b'1') # user is neutral / not in frame
+                    send_data(1, horizontal_position)
                     buffer.clear()
                 else:
                     print('sending c!')
-                    ser.write(b'2')
+                    # ser.write(b'2')
+                    send_data(2, horizontal_position)
                     buffer.clear()
         
         if cv2.waitKey(1) &0xFF == ord('q'):
             break
 
-            
+def send_data(state_index, horizontal_position):
+    # Ensure the values are within the correct range
+    if 0 <= state_index <= 2 and 0 <= horizontal_position <= 6:
+        # Encoding: assuming value1 uses the upper 3 bits and value2 uses the lower 5 bits
+        encoded_byte = (state_index << 5) | horizontal_position
+        ser.write(bytes([encoded_byte]))
+    else:
+        print("Values out of range")
+
+
 # labels = ['angry','disgust','fear','happy','neutral','sad','surprise']
 
 if __name__ == "__main__":

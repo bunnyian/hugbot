@@ -29,12 +29,13 @@ B10000
 const int ledPin =  LED_BUILTIN;// the number of the LED pin
 
 int ledState = LOW;             // ledState used to set the LED
+int stateValue; // 0 = sad/disgusted/angry, 1 = neutral, 2 = happy/surprised
 
-
-unsigned long previousMillis = 0;        // will store last time LED was updated
+unsigned long previousReadStateMillis = 0;        // will store last time state was read
+unsigned long previousBlinkMillis = 0;        // will store last time state was read
 
 const long READ_STATE_INTERVAL = 4000; // interval at which to read state (in milliseconds) 
-const long BLINK_INTERVAL = 400;           // interval at which to blink eyes (in milliseconds)
+const long BLINK_INTERVAL = 5333;           // interval at which to blink eyes (in milliseconds)
 
 
 // the setup function runs once when you press reset or power the board
@@ -61,24 +62,34 @@ void loop() {
 
   unsigned long currentMillis = millis();
 
-  // check to see if it's time to blink the LED; that is, if the difference
-  // between the current time and last time you blinked the LED is bigger than
-  // the interval at which you want to blink the LED.
-  if (currentMillis - previousMillis >= READ_STATE_INTERVAL) {
+  // check to see if it's time to read state
+  if (currentMillis - previousReadStateMillis >= READ_STATE_INTERVAL) {
     // save the last time we read state
-    previousMillis = currentMillis;
+    previousReadStateMillis = currentMillis;
 
     incomingByte = Serial.read();
-    int value = incomingByte - '0';
+    stateValue = incomingByte - '0';
 
-    if (value == 0) {
+    lcd.clear();
+    if (stateValue == 0) {
       lcd.print("hug time :(");
-    } else if (value == 1) {
+    } else if (stateValue == 1) {
       lcd.print(":/");
-    } else if (value == 2) {
+    } else if (stateValue == 2) {
       lcd.print("dancy time");
-    } 
+    }
   }
+
+  // check to see if it's time to blink
+  if (currentMillis - previousBlinkMillis >= BLINK_INTERVAL) {
+    // save the last time we read state
+    previousBlinkMillis = currentMillis;
+
+    lcd.clear();
+    lcd.print("blink!");
+  }
+
+  
 
   
 //   // light up if serial 1 input

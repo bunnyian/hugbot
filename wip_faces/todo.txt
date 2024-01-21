@@ -1,14 +1,16 @@
-X get hello world printed on lcd
-X get one-row heart eyes printed on lcd
-X [10min] get two-row 😍 face printed on lcd (for when user is happy)
-X- [10min] compress 12 byte heart to 8 bytes.
-X [5min] add a little mouth uwu
-X [10min] get one-row  •w• face printed on lcd (for when user is neutral)
-X [10min] get one-row 4byte 🥺 face printed on lcd (for when user is sad/angry)
-X [2min] replace 😍 face with one-row ^w^ (for when user is happy)
-X [15min] integrate with robotcontrol.io
+baseline features to implement:
+X [10min] get hello world printed on lcd
+X [10min] get the one-row heart eyes printed on lcd
+X [10min] get the two-row 😍 face printed on lcd (for when user is happy)
+X [10min] compress the 12 byte heart to 8 bytes.
+X [5min] add a little mouth 
+X [10min] get the one-row •w• face printed on lcd (for when user is neutral)
+X [10min] get the one-row 4 byte 🥺 face printed on lcd (for when user is sad/angry)
+X [2min] replace 😍 face with one-row ^w^ due to RAM limitations (for when user is happy)
+X [5min] create a blink animation that goes off every now and then and overrides the current face's eyes 
+X [15min] integrate with robotcontrol.ino
 
-X [5min] create a blink animation that goes off every now and then and overrides the current face's eyes (clear screen, redraw "w" mouth, redraw eyes as "u" (with offset))
-X [5min] print eyes with a given horizontal offset 
-O [15min] output horizontal position of largest bounding box from facial detection
-- [15min] implement horizontal tracking of eyes
+extra features I'd like implement to make it cooler:
+X [5min] display eyes with a given horizontal offset 
+- [15min] output normalized horizontal position of largest bounding box from facial detection code to serial port
+- [15min] adjust the horizontal offset of eyes accordingly to implement eye tracking 😎

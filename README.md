@@ -7,7 +7,7 @@
 <img width="333" alt="Screen Shot 2024-01-21 at 12 52 11 PM" src="https://github.com/bunnyian/hugbot/assets/93463679/e9894db3-80a9-40a1-af6d-94b0bd2b817a">
 
 # Usage
-1. Upload the robotcontrol.ino file to the arduino.
-2. Run is_happy.py on your computer, from the hugbot directory.
+1. Upload the robotcontrol.ino file to the Arduino Uno.
+2. Run is_happy.py on your computer, from the ``hugbot`` directory.
 
 And that's it!! Happy hugging :sunglasses:

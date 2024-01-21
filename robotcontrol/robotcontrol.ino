@@ -252,16 +252,16 @@ void closeEyes(int myHorizontalOffsetValue){
 
 void hugUser() {
   // activate arm motors to hug user
-  lcd.setCursor(1, 0);
-  lcd.print(currentMillis - previousStateLockedMillis / 1000);
-  lcd.print("     ");
+  // lcd.setCursor(1, 0);
+  // lcd.print(currentMillis - previousStateLockedMillis / 1000);
+  // lcd.print("     ");
   currentlyHugging = false;
 }
 
 void spinPropeller() {
   // activate propellor motor to spin propeller
-  lcd.setCursor(1, 0);
-  lcd.print(currentMillis - previousStateLockedMillis / 1000);
-  lcd.print("     ");
+  // lcd.setCursor(1, 0);
+  // lcd.print(currentMillis - previousStateLockedMillis / 1000);
+  // lcd.print("     ");
   currentlyPropelling = false;
 }

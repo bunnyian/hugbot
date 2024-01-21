@@ -15,7 +15,8 @@ def send_data(state_index, horizontal_position):
         ser.write(bytes([encoded_byte]))
     else:
         print("Values out of range")
-
+hor_pos = 0
+state_num = 0
 while True:
     # ser.write(b'0') # user is sad/disgusted/angry
     # time.sleep(1)
@@ -24,15 +25,25 @@ while True:
     # ser.write(b'2') # user is happy/surprised
     # time.sleep(1) 
     # print('sent')
-    send_data(0, 6)
-    print('sent 0,6')
+
+    # send_data(0, 6)
+    # print('sent 0,6')
+    # time.sleep(0.1)
+    # send_data(1, 6)
+    # print('sent 1,6')
+    # time.sleep(0.1)
+    # send_data(2, 6)
+    # print('sent 2,6')
+    # time.sleep(0.1) 
+
+    
+    send_data(state_num % 3, hor_pos % 6)
+    print(state_num % 3, hor_pos % 6)
     time.sleep(0.1)
-    send_data(1, 6)
-    print('sent 1,6')
-    time.sleep(0.1)
-    send_data(2, 6)
-    print('sent 2,6')
-    time.sleep(0.1) 
+    hor_pos += 1
+    state_num += 1
+
+    
 
     
 

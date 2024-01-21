@@ -43,8 +43,6 @@ unsigned long previousReadByteMillis = 0; // stores last time byte was read (in
 unsigned long previousStateLockedMillis = 0;  // stores last time state was locked (in milliseconds)
 unsigned long previousBlinkStartedMillis = 0; // stores last time eyes were closed (in milliseconds)
 
-// const long READ_STATE_INTERVAL = 4000; // how long to wait in between reading
-// incoming state (in milliseconds)
 const long READ_BYTE_INTERVAL =
     500; // how long to wait in between reading incoming byte (in milliseconds)
 const long STATE_DURATION = 4000; // how long to lock in the current state (in milliseconds), so that the hugging or propeller actions have enough time to complete
@@ -249,10 +247,12 @@ void closeEyes(){
     }
 }
 
-void hugUser() {
+// the following two functions are currently set to take 4000 ms each to complete. if you need more time, go to line 48 and increase the STATE_DURATION value.
+
+void hugUser() { 
   // activate arm motors to hug user
 }
 
-void spinPropeller() {
+void spinPropeller() { 
   // activate propellor motor to spin propeller
 }

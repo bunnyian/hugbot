@@ -25,14 +25,14 @@ while True:
     # time.sleep(1) 
     # print('sent')
     send_data(0, 6)
-    print('sent 0,5')
-    time.sleep(1)
+    print('sent 0,6')
+    time.sleep(0.1)
     send_data(1, 6)
-    print('sent 1,5')
-    time.sleep(1)
+    print('sent 1,6')
+    time.sleep(0.1)
     send_data(2, 6)
-    print('sent 2,5')
-    time.sleep(1) 
+    print('sent 2,6')
+    time.sleep(0.1) 
 
     
 

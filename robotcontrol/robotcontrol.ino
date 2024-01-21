@@ -32,17 +32,22 @@ const int ledPin =  LED_BUILTIN; // set the number of the LED pin
 int stateByte;
 int horizontalPositionByte;
 
-int stateValue; // 0 = sad/disgusted/angry, 1 = neutral, 2 = happy/surprised
+int recievedStateValue; // 0 = sad/disgusted/angry, 1 = neutral, 2 = happy/surprised
+int lockedInStateValue; // 0 = sad/disgusted/angry, 1 = neutral, 2 = happy/surprised
 int horizontalOffsetValue; // from -3 to 3, where -3 is far left and 3 is far right
 bool currentlyEyesClosed = false; // whether eyes are currently closed
 
 unsigned long currentMillis = 0; // stores current time (in milliseconds)
-     
-unsigned long previousReadStateMillis = 0;  // stores last time state was read (in milliseconds)
+unsigned long previousReadByteMillis = 0; // stores last time byte was read (in
+                                          // milliseconds)
+unsigned long previousStateLockedMillis = 0;  // stores last time state was locked (in milliseconds)
 unsigned long previousBlinkStartedMillis = 0; // stores last time eyes were closed (in milliseconds)
 
-// const long READ_STATE_INTERVAL = 4000; // how long to wait in between reading incoming state (in milliseconds)
-const long READ_STATE_INTERVAL = 500; // how long to wait in between reading incoming state (in milliseconds)
+// const long READ_STATE_INTERVAL = 4000; // how long to wait in between reading
+// incoming state (in milliseconds)
+const long READ_BYTE_INTERVAL =
+    500; // how long to wait in between reading incoming byte (in milliseconds)
+const long STATE_DURATION = 4000; // how long to lock in the current state (in milliseconds), so that the hugging or propeller actions have enough time to complete
 const long BLINK_INTERVAL =
     5001; // how long to wait in between blinks (in milliseconds)
 const long BLINK_DURATION = 200;  // duration for which to keep eyes closed during a blink (in milliseconds)
@@ -77,13 +82,9 @@ void loop() {
   currentMillis = millis(); 
 
   // check if it's time to read incoming state
-  if (currentMillis - previousReadStateMillis >= READ_STATE_INTERVAL) {
+  if (currentMillis - previousReadByteMillis >= READ_BYTE_INTERVAL) {
     // save the last time we read the incoming state
-    previousReadStateMillis = currentMillis;
-
-    // // read the incoming state byte
-    // incomingStateByte = Serial.read();
-    // stateValue = incomingStateByte - '0';
+    previousReadByteMillis = currentMillis;
 
     byte incomingByte = Serial.read();
 
@@ -94,31 +95,30 @@ void loop() {
     int horizontalPositionByte =
         incomingByte & 0x07; // Mask with 0x07 to get the last 3 bits
 
-    // stateValue = stateByte - '0';
-    stateValue = stateByte;
+    recievedStateValue = stateByte;
     horizontalOffsetValue = horizontalPositionByte - 3;
 
-   
+    if (currentMillis - previousStateLockedMillis >= STATE_DURATION) {
+      previousStateLockedMillis = currentMillis;
 
-    // lcd.setCursor(8, 1);
-    // lcd.write(stateValue);
-    // Serial.println(stateValue);
-    
+      lockedInStateValue = recievedStateValue;
+    }
+      
     // take the appropriate actions based on the state
-    if (stateValue == 0) { // user is sad/disgusted/angry
+    if (lockedInStateValue == 0) { // user is sad/disgusted/angry
       drawPleadingFace(horizontalOffsetValue);
       hugUser();
 
       // just for debugging
       lcd.setCursor(0, 1);
       lcd.write("a");
-    } else if (stateValue == 1) { // user is neutral or not found in the frame
+    } else if (lockedInStateValue == 1) { // user is neutral or not found in the frame
       drawNeutralFace(horizontalOffsetValue);
 
       // just for debugging
       lcd.setCursor(0, 1);
       lcd.write("b");
-    } else if (stateValue == 2) { // user is happy/surprised
+    } else if (lockedInStateValue == 2) { // user is happy/surprised
       drawHappyFace(horizontalOffsetValue);
       spinPropeller();
 
@@ -162,11 +162,11 @@ void loop() {
   if ((currentMillis - previousBlinkStartedMillis >= BLINK_DURATION) && (currentlyEyesClosed)) {
 
     // redraw the face based on the current state
-    if (stateValue == 0) {
+    if (lockedInStateValue == 0) {
       drawPleadingFace(horizontalOffsetValue);
-    } else if (stateValue == 1) {
+    } else if (lockedInStateValue == 1) {
       drawNeutralFace(horizontalOffsetValue);
-    } else if (stateValue == 2) {
+    } else if (lockedInStateValue == 2) {
       drawHappyFace(horizontalOffsetValue);
     }
 

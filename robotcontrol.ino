@@ -76,12 +76,15 @@ void loop() {
     // read the incoming byte
     byte incomingByte = Serial.read();
 
-    // decode the byte
-    recievedStateValue =
+    if (incomingByte != -1) {
+      // decode the byte
+      recievedStateValue =
         (incomingByte >> 5) & 0x03; // Shift right 5 bits and mask with 0x03 to
                                     // get the last 2 bits
-    horizontalPositionByte =
+      horizontalPositionByte =
         incomingByte & 0x07; // Mask with 0x07 to get the last 3 bits
+    }
+
 
     // calculate the horizontal offset of the eyes
     horizontalOffsetValue = horizontalPositionByte - 3;
@@ -219,8 +222,8 @@ void drawHappyFace(int horizontalOffsetValue){
 void closeEyes(){
   // only blink eyes 75% of the time, to make it more natural
   int blinkChance = random(4);
-  if (blinkChance != 0){  // i.e, the 75% chance of blinking occured
-
+  if (blinkChance > 10){  // i.e, never blink
+  // if (blinkChance != 0){  // i.e, the 75% chance of blinking occured
     // clear eyes 
     lcd.setCursor(0, 0);
     lcd.write("               ");

@@ -42,7 +42,7 @@ unsigned long previousStateLockedMillis = 0;  // stores last time state was lock
 unsigned long previousBlinkStartedMillis = 0; // stores last time eyes were closed (in milliseconds)
 
 const long READ_BYTE_INTERVAL =
-    500; // how long to wait in between reading incoming bytes (in milliseconds)
+    75; // how long to wait in between reading incoming bytes (in milliseconds)
 const long STATE_DURATION = 4000; // how long to lock in the current state (in milliseconds), so that the hugging or propeller actions have enough time to complete
 const long BLINK_INTERVAL =
     5001; // how long to wait in between blinks (in milliseconds)
@@ -76,16 +76,21 @@ void loop() {
     // read the incoming byte
     byte incomingByte = Serial.read();
 
-    // decode the byte
-    recievedStateValue =
+    if (incomingByte != -1) {
+      // decode the byte
+      recievedStateValue =
         (incomingByte >> 5) & 0x03; // Shift right 5 bits and mask with 0x03 to
                                     // get the last 2 bits
-    horizontalPositionByte =
-        incomingByte & 0x07; // Mask with 0x07 to get the last 3 bits
+      horizontalPositionByte =
+          incomingByte & 0x07; // Mask with 0x07 to get the last 3 bits
 
-    // calculate the horizontal offset of the eyes
-    horizontalOffsetValue = horizontalPositionByte - 3;
+ 
 
+    }
+
+     // calculate the horizontal offset of the eyes
+      horizontalOffsetValue = horizontalPositionByte - 3;
+  
     // lock in the current state so that actions like propeller spinning and hugging can complete properly.
     if (currentMillis - previousStateLockedMillis >= STATE_DURATION) {
       previousStateLockedMillis = currentMillis;
@@ -161,7 +166,7 @@ void loop() {
   }
 }
 
-void drawPleadingFace(int horizontalOffsetValue) {
+void drawPleadingFace(int myHorizontalOffsetValue) {
   // clear screen
   lcd.clear();
   
@@ -170,19 +175,19 @@ void drawPleadingFace(int horizontalOffsetValue) {
   lcd.write("n");
 
   // display pleading left eye
-  lcd.setCursor(3+horizontalOffsetValue, 0);
+  lcd.setCursor(3+myHorizontalOffsetValue, 0);
   lcd.write(byte(0));
-  lcd.setCursor(4+horizontalOffsetValue, 0);
+  lcd.setCursor(4+myHorizontalOffsetValue, 0);
   lcd.write(byte(1));
 
   // display pleading right eye
-  lcd.setCursor(10+horizontalOffsetValue, 0);
+  lcd.setCursor(10+myHorizontalOffsetValue, 0);
   lcd.write(byte(0));
-  lcd.setCursor(11+horizontalOffsetValue, 0);
+  lcd.setCursor(11+myHorizontalOffsetValue, 0);
   lcd.write(byte(1));
 }
 
-void drawNeutralFace(int horizontalOffsetValue){
+void drawNeutralFace(int myHorizontalOffsetValue){
   // clear screen
   lcd.clear();
   
@@ -191,15 +196,15 @@ void drawNeutralFace(int horizontalOffsetValue){
   lcd.write("w"); 
 
   // display neutral left eye
-  lcd.setCursor(4+horizontalOffsetValue, 0);
+  lcd.setCursor(4+myHorizontalOffsetValue, 0);
   lcd.write(".");
 
   // display neutral right eye
-  lcd.setCursor(10+horizontalOffsetValue, 0);
+  lcd.setCursor(10+myHorizontalOffsetValue, 0);
   lcd.write(".");
 }
 
-void drawHappyFace(int horizontalOffsetValue){
+void drawHappyFace(int myHorizontalOffsetValue){
   // clear screen
   lcd.clear();
 
@@ -208,29 +213,31 @@ void drawHappyFace(int horizontalOffsetValue){
   lcd.write("w"); 
 
   // display happy left eye
-  lcd.setCursor(4+horizontalOffsetValue, 0);
+  lcd.setCursor(4+myHorizontalOffsetValue, 0);
   lcd.write("^");
 
   // display happy right eye
-  lcd.setCursor(10+horizontalOffsetValue, 0);
+  lcd.setCursor(10+myHorizontalOffsetValue, 0);
   lcd.write("^");
 }
 
-void closeEyes(int horizontalOffsetValue){
+void closeEyes(int myHorizontalOffsetValue){
   // only blink eyes 75% of the time, to make it more natural
   int blinkChance = random(4);
-  if (blinkChance != 0){  // i.e, the 75% chance of blinking occured
+  if (blinkChance > 10){  // i.e, never blink
+  // if (blinkChance != 0){  // i.e, the 75% chance of blinking occured
     // clear eyes 
     lcd.setCursor(0, 0);
     lcd.write("               ");
 
     // display closed left eye
-    lcd.setCursor(4+horizontalOffsetValue, 0);
+    lcd.setCursor(4+myHorizontalOffsetValue, 0);
     lcd.write("u");
 
     // display closed right eye
-    lcd.setCursor(10+horizontalOffsetValue, 0);
+    lcd.setCursor(10+myHorizontalOffsetValue, 0);
     lcd.write("u");
+    lcd.setCursor(0, 0); // can I delete this line?
     }
 }
 

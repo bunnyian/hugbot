@@ -1,14 +1,4 @@
 /*
-  LiquidCrystal Library - Hello World
-
- Demonstrates the use a 16x2 LCD display.  The LiquidCrystal
- library works with all LCD displays that are compatible with the
- Hitachi HD44780 driver. There are many of them out there, and you
- can usually tell them by the 16-pin interface.
-
- This sketch prints "Hello World!" to the LCD
- and shows the time.
-
   The circuit:
  * LCD RS pin to digital pin 12
  * LCD Enable pin to digital pin 11
@@ -19,25 +9,9 @@
  * LCD R/W pin to ground
  * LCD VSS pin to ground
  * LCD VCC pin to 5V
- * 10K resistor:
+ * potentiometer:
  * ends to +5V and ground
- * wiper to LCD VO pin (pin 3)
-
- Library originally added 18 Apr 2008
- by David A. Mellis
- library modified 5 Jul 2009
- by Limor Fried (http://www.ladyada.net)
- example added 9 Jul 2009
- by Tom Igoe
- modified 22 Nov 2010
- by Tom Igoe
- modified 7 Nov 2016
- by Arturo Guadalupi
-
- This example code is in the public domain.
-
- http://www.arduino.cc/en/Tutorial/LiquidCrystalHelloWorld
-
+ * wiper to LCD VO pin 
 */
 
 // include the library code:
@@ -133,28 +107,6 @@ byte heartTop4[8] = {
   B11100
 };
 
-// byte heartTop5[8] = {
-//   B11111,
-//   B11111,
-//   B11111,
-//   B11111,
-//   B11111,
-//   B11111,
-//   B11111,
-//   B11111
-// };
-
-// byte heartTop6[8] = {
-//   B00000,
-//   B11000,
-//   B11110,
-//   B11111,
-//   B11111,
-//   B11111,
-//   B11110,
-//   B11000
-// };
-
 byte heartBottom1[8] = {
   B00001,
   B00000,
@@ -199,107 +151,7 @@ byte heartBottom4[8] = {
  B00000
 };
 
-// byte heartBottom5[8] = {
-//  B00000,
-//  B00001,
-//  B11111,
-//  B11100,
-//  B00001,
-//  B00000,
-//  B00000,
-//  B00000
-// };
 
-// byte heartBottom6[8] = {
-//  B00000,
-//  B00000,
-//  B11111,
-//  B11000,
-//  B00000,
-//  B00000,
-//  B00000,
-//  B00000
-// };
-
-// BLACKOUT TEST
-
-
-// byte heartTop1[8] = {
-//   B11111,
-//   B11111,
-//   B11111,
-//   B11111,
-//   B11111,
-//   B11111,
-//   B11111,
-//   B11111
-// };
-
-// byte heartTop2[8] = {
-//   B11111,
-//   B11111,
-//   B11111,
-//   B11111,
-//   B11111,
-//   B11111,
-//   B11111,
-//   B11111
-// };
-
-// byte heartTop3[8] = {
-//   B11111,
-//   B11111,
-//   B11111,
-//   B11111,
-//   B11111,
-//   B11111,
-//   B11111,
-//   B11111
-// };
-
-// byte heartTop4[8] = {
-//   B11111,
-//   B11111,
-//   B11111,
-//   B11111,
-//   B11111,
-//   B11111,
-//   B11111,
-//   B11111
-// };
-
-// byte heartTop5[8] = {
-//   B11111,
-//   B11111,
-//   B11111,
-//   B11111,
-//   B11111,
-//   B11111,
-//   B11111,
-//   B11111
-// };
-
-// byte heartTop6[8] = {
-//   B11111,
-//   B11111,
-//   B11111,
-//   B11111,
-//   B11111,
-//   B11111,
-//   B11111,
-//   B11111
-// };
-
-// byte heartBottom1[8] = {
-//   B11111,
-//   B11111,
-//   B11111,
-//   B11111,
-//   B11111,
-//   B11111,
-//   B11111,
-//   B11111
-// };
 
 void setup() {
   // Create the custom characters
@@ -319,49 +171,53 @@ void setup() {
   // Clear the LCD screen
   lcd.clear();
 
-  // Display left eye
-  lcd.setCursor(1, 0);
-  lcd.write(byte(0));
-  lcd.setCursor(2, 0);
-  lcd.write(byte(1));
-  lcd.setCursor(3, 0);
-  lcd.write(byte(2));
-  lcd.setCursor(4, 0);
-  lcd.write(byte(3));
-  
-
-  lcd.setCursor(1, 1);
-  lcd.write(byte(4));
-  lcd.setCursor(2, 1);
-  lcd.write(byte(5));
-  lcd.setCursor(3, 1);
-  lcd.write(byte(6));
-  lcd.setCursor(4, 1);
-  lcd.write(byte(7));
-
-
- // Display right eye
-  lcd.setCursor(10, 0);
-  lcd.write(byte(0));
-  lcd.setCursor(11, 0);
-  lcd.write(byte(1));
-  lcd.setCursor(12, 0);
-  lcd.write(byte(2));
-  lcd.setCursor(13, 0);
-  lcd.write(byte(3));
-  
-  lcd.setCursor(10, 1);
-  lcd.write(byte(4));
-  lcd.setCursor(11, 1);
-  lcd.write(byte(5));
-  lcd.setCursor(12, 1);
-  lcd.write(byte(6));
-  lcd.setCursor(13, 1);
-  lcd.write(byte(7));
-
-// Display mouth
+  // Display mouth
   lcd.setCursor(7, 1);
   lcd.write("w");
+
+
+
+//   // Display left eye
+//   lcd.setCursor(1, 0);
+//   lcd.write(byte(0));
+//   lcd.setCursor(2, 0);
+//   lcd.write(byte(1));
+//   lcd.setCursor(3, 0);
+//   lcd.write(byte(2));
+//   lcd.setCursor(4, 0);
+//   lcd.write(byte(3));
+  
+
+//   lcd.setCursor(1, 1);
+//   lcd.write(byte(4));
+//   lcd.setCursor(2, 1);
+//   lcd.write(byte(5));
+//   lcd.setCursor(3, 1);
+//   lcd.write(byte(6));
+//   lcd.setCursor(4, 1);
+//   lcd.write(byte(7));
+
+
+//  // Display right eye
+//   lcd.setCursor(10, 0);
+//   lcd.write(byte(0));
+//   lcd.setCursor(11, 0);
+//   lcd.write(byte(1));
+//   lcd.setCursor(12, 0);
+//   lcd.write(byte(2));
+//   lcd.setCursor(13, 0);
+//   lcd.write(byte(3));
+  
+//   lcd.setCursor(10, 1);
+//   lcd.write(byte(4));
+//   lcd.setCursor(11, 1);
+//   lcd.write(byte(5));
+//   lcd.setCursor(12, 1);
+//   lcd.write(byte(6));
+//   lcd.setCursor(13, 1);
+//   lcd.write(byte(7));
+
+
 
 }
 
@@ -370,4 +226,4 @@ void loop() {
   
 }
 
-// 0 (1 2 3 4) 5 6 w 8 9 (10 11 12 13) 14 15
+// 0 (1 2 |3| 4) 5 6 w 8 9 (10 |11| 12 13) 14 15

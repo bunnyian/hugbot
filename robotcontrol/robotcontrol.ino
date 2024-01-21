@@ -244,7 +244,6 @@ void closeEyes(int myHorizontalOffsetValue){
     // display closed right eye
     lcd.setCursor(10+myHorizontalOffsetValue, 0);
     lcd.write("u");
-    // lcd.setCursor(0, 0); // can I delete this line?
     }
 }
 

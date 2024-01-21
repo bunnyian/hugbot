@@ -98,6 +98,8 @@ void loop() {
     stateValue = stateByte;
     horizontalOffsetValue = horizontalPositionByte - 3;
 
+   
+
     // lcd.setCursor(8, 1);
     // lcd.write(stateValue);
     // Serial.println(stateValue);
@@ -118,6 +120,24 @@ void loop() {
       lcd.setCursor(0, 1);
       lcd.write("c");
     }
+
+    lcd.setCursor(1, 1);
+    if (horizontalOffsetValue == -3) {
+      lcd.write("a");
+    } else if (horizontalOffsetValue == -2) {
+      lcd.write("b");
+    } else if (horizontalOffsetValue == -1) {
+      lcd.write("c");
+    } else if (horizontalOffsetValue == 0) {
+      lcd.write("d");
+    } else if (horizontalOffsetValue == 1) {
+      lcd.write("e");
+    } else if (horizontalOffsetValue == 2) {
+      lcd.write("f");
+    } else if (horizontalOffsetValue == 3) {
+      lcd.write("g");
+    }
+  
 
     
   }

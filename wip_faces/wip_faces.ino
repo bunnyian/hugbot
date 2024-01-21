@@ -179,49 +179,49 @@ byte heartBottom2[8] = {
 
 // extra bytes 
 
-//byte heartBottom3[8] = {
-//  B00000,
-//  B11111,
-//  B11111,
-//  B11111,
-//  B11111,
-//  B00000,
-//  B00000,
-//  B00000
-//};
-//
-//byte heartBottom4[8] = {
-//  B00000,
-//  B00111,
-//  B11111,
-//  B11110,
-//  B00111,
-//  B00000,
-//  B00000,
-//  B00000
-//};
-//
-//byte heartBottom5[8] = {
-//  B00000,
-//  B00001,
-//  B11111,
-//  B11100,
-//  B00001,
-//  B00000,
-//  B00000,
-//  B00000
-//};
-//
-//byte heartBottom6[8] = {
-//  B00000,
-//  B00000,
-//  B11111,
-//  B11000,
-//  B00000,
-//  B00000,
-//  B00000,
-//  B00000
-//};
+byte heartBottom3[8] = {
+ B00000,
+ B11111,
+ B11111,
+ B11111,
+ B11111,
+ B00000,
+ B00000,
+ B00000
+};
+
+byte heartBottom4[8] = {
+ B00000,
+ B00111,
+ B11111,
+ B11110,
+ B00111,
+ B00000,
+ B00000,
+ B00000
+};
+
+byte heartBottom5[8] = {
+ B00000,
+ B00001,
+ B11111,
+ B11100,
+ B00001,
+ B00000,
+ B00000,
+ B00000
+};
+
+byte heartBottom6[8] = {
+ B00000,
+ B00000,
+ B11111,
+ B11000,
+ B00000,
+ B00000,
+ B00000,
+ B00000
+};
 
 // BLACKOUT TEST
 
@@ -314,10 +314,12 @@ void setup() {
 
   lcd.createChar(6, heartBottom1);
   lcd.createChar(7, heartBottom2);
-//  lcd.createChar(8, heartBottom3);
-//  lcd.createChar(9, heartBottom4);
-//  lcd.createChar(10, heartBottom5);
-//  lcd.createChar(11, heartBottom6);
+
+  //testing byte limit to make sure one last time..
+  lcd.createChar(8, heartBottom3);
+  lcd.createChar(9, heartBottom4);
+  lcd.createChar(10, heartBottom5);
+  lcd.createChar(11, heartBottom6);
 
   // Set up the LCD's number of columns and rows
   lcd.begin(16, 2);
@@ -344,6 +346,15 @@ void setup() {
   lcd.setCursor(1, 1);
   lcd.write(byte(7));
 
+  lcd.setCursor(2, 1);
+  lcd.write(byte(8));
+  lcd.setCursor(3, 1);
+  lcd.write(byte(9));
+  lcd.setCursor(4, 1);
+  lcd.write(byte(10));
+  lcd.setCursor(5, 1);
+  lcd.write(byte(11));
+  
  // Display heart 2
   lcd.setCursor(8, 0);
   lcd.write(byte(0));
@@ -362,6 +373,15 @@ void setup() {
   lcd.write(byte(6));
   lcd.setCursor(9, 1);
   lcd.write(byte(7));
+  lcd.setCursor(10, 1);
+  lcd.write(byte(8));
+  lcd.setCursor(11, 1);
+  lcd.write(byte(9));
+  lcd.setCursor(12, 1);
+  lcd.write(byte(10));
+  lcd.setCursor(13, 1);
+  lcd.write(byte(11));
+
 }
 
 void loop() {

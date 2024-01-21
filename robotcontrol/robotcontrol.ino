@@ -250,7 +250,44 @@ void closeEyes(int myHorizontalOffsetValue){
 
 // the following two functions are currently set to take 4000 ms each to complete. if you need more time, just go to line 46 and increase the STATE_DURATION value!
 
+#include <Stepper.h>
+const int stepsPerRevolution = 2038;
+Stepper stepperL = Stepper(stepsPerRevolution, 8, 10, 9, 13);
+Stepper stepperR = Stepper(stepsPerRevolution, 8, 10, 9, 13);
+
+void leftArmIn() {
+  stepperL.setSpeed(10); // parapeter is RPM
+    stepperL.step(stepsPerRevolution);
+    delay(2000);
+}
+
+void leftArmOut() {
+  // curve left arm outwards
+    stepperL.setSpeed(10);
+    stepperL.step(-stepsPerRevolution);
+    delay(1000);
+}
+
+void rightArmIn() {
+  // curve right arm inwards
+  stepperR.setSpeed(10);
+    stepperR.step(stepsPerRevolution);
+    delay(1000);
+}
+
+void rightArmOut() {
+  // curve right arm outwards
+  stepperR.setSpeed(10);
+    stepperR.step(-stepsPerRevolution);
+    delay(1000);
+}
+
 void hugUser() {
+  // activate arm motors to hug user
+  rightArmIn();
+  leftArmIn();
+  rightArmOut();
+  leftArmOut();
   // activate arm motors to hug user
   // lcd.setCursor(1, 0);
   // lcd.print(currentMillis - previousStateLockedMillis / 1000);

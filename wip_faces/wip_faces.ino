@@ -68,25 +68,25 @@ LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
 // 00000 00000 00000 00000 00000 00000     
 
 
+// 8 byte heart!!
 
+// 00001 11100 00111 10000     
+// 00111 11110 01111 11100     
+// 01111 11111 11111 11110     
+// 11111 11111 11111 11111     
+// 11111 11111 11111 11111     
+// 11111 11111 11111 11111     
+// 01111 11111 11111 11110     
+// 00111 11111 11111 11100  
 
-// 0000 01111 11000 00001 11111 00000     
-// 0001 11111 11110 00111 11111 11000     
-// 0111 11111 11111 01111 11111 11110     
-// 1111 11111 11111 11111 11111 11111     
-// 1111 11111 11111 11111 11111 11111     
-// 1111 11111 11111 11111 11111 11111     
-// 0111 11111 11111 11111 11111 11110     
-// 0001 11111 11111 11111 11111 11000  
-//   
-// 0000 01111 11111 11111 11111 00000     
-// 0000 00011 11111 11111 11100 00000     
-// 0000 00000 11111 11111 10000 00000     
-// 0000 00000 00111 11110 00000 00000     
-// 0000 00000 00001 11000 00000 00000     
-// 0000 00000 00000 10000 00000 00000     
-// 0000 00000 00000 00000 00000 00000     
-// 0000 00000 00000 00000 00000 00000    
+// 00001 11111 11111 10000     
+// 00000 11111 11111 00000     
+// 00000 01111 11110 00000     
+// 00000 00011 11000 00000     
+// 00000 00001 10000 00000     
+// 00000 00000 00000 00000     
+// 00000 00000 00000 00000     
+// 00000 00000 00000 00000    
 
 // Custom characters to create a heart shape
 byte heartTop1[8] = {
@@ -315,12 +315,6 @@ void setup() {
   lcd.createChar(6, heartBottom1);
   lcd.createChar(7, heartBottom2);
 
-  //testing byte limit to make sure one last time..
-  lcd.createChar(8, heartBottom3);
-  lcd.createChar(9, heartBottom4);
-  lcd.createChar(10, heartBottom5);
-  lcd.createChar(11, heartBottom6);
-
   // Set up the LCD's number of columns and rows
   lcd.begin(16, 2);
 
@@ -346,15 +340,6 @@ void setup() {
   lcd.setCursor(1, 1);
   lcd.write(byte(7));
 
-  lcd.setCursor(2, 1);
-  lcd.write(byte(8));
-  lcd.setCursor(3, 1);
-  lcd.write(byte(9));
-  lcd.setCursor(4, 1);
-  lcd.write(byte(10));
-  lcd.setCursor(5, 1);
-  lcd.write(byte(11));
-  
  // Display heart 2
   lcd.setCursor(8, 0);
   lcd.write(byte(0));
@@ -373,14 +358,7 @@ void setup() {
   lcd.write(byte(6));
   lcd.setCursor(9, 1);
   lcd.write(byte(7));
-  lcd.setCursor(10, 1);
-  lcd.write(byte(8));
-  lcd.setCursor(11, 1);
-  lcd.write(byte(9));
-  lcd.setCursor(12, 1);
-  lcd.write(byte(10));
-  lcd.setCursor(13, 1);
-  lcd.write(byte(11));
+
 
 }
 

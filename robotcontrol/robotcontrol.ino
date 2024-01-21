@@ -106,20 +106,20 @@ void loop() {
     
     // take the appropriate actions based on the state
     if (stateValue == 0) { // user is sad/disgusted/angry
-      drawPleadingFace();
+      drawPleadingFace(horizontalOffsetValue);
       hugUser();
 
       // just for debugging
       lcd.setCursor(0, 1);
       lcd.write("a");
     } else if (stateValue == 1) { // user is neutral or not found in the frame
-      drawNeutralFace();
+      drawNeutralFace(horizontalOffsetValue);
 
       // just for debugging
       lcd.setCursor(0, 1);
       lcd.write("b");
     } else if (stateValue == 2) { // user is happy/surprised
-      drawHappyFace();
+      drawHappyFace(horizontalOffsetValue);
       spinPropeller();
 
       // just for debugging
@@ -163,18 +163,18 @@ void loop() {
 
     // redraw the face based on the current state
     if (stateValue == 0) {
-      drawPleadingFace();
+      drawPleadingFace(horizontalOffsetValue);
     } else if (stateValue == 1) {
-      drawNeutralFace();
+      drawNeutralFace(horizontalOffsetValue);
     } else if (stateValue == 2) {
-      drawHappyFace();
+      drawHappyFace(horizontalOffsetValue);
     }
 
     currentlyEyesClosed = false;
   }
 }
 
-void drawPleadingFace() {
+void drawPleadingFace(int horizontalOffsetValue) {
   // clear screen
   lcd.clear();
   
@@ -183,19 +183,19 @@ void drawPleadingFace() {
   lcd.write("n");
 
   // display pleading left eye
-  lcd.setCursor(3, 0);
+  lcd.setCursor(3+horizontalOffsetValue, 0);
   lcd.write(byte(0));
-  lcd.setCursor(4, 0);
+  lcd.setCursor(4+horizontalOffsetValue, 0);
   lcd.write(byte(1));
 
   // display pleading right eye
-  lcd.setCursor(10, 0);
+  lcd.setCursor(10+horizontalOffsetValue, 0);
   lcd.write(byte(0));
-  lcd.setCursor(11, 0);
+  lcd.setCursor(11+horizontalOffsetValue, 0);
   lcd.write(byte(1));
 }
 
-void drawNeutralFace(){
+void drawNeutralFace(int horizontalOffsetValue){
   // clear screen
   lcd.clear();
   
@@ -204,15 +204,15 @@ void drawNeutralFace(){
   lcd.write("w"); 
 
   // display neutral left eye
-  lcd.setCursor(4, 0);
+  lcd.setCursor(4+horizontalOffsetValue, 0);
   lcd.write(".");
 
   // display neutral right eye
-  lcd.setCursor(10, 0);
+  lcd.setCursor(10+horizontalOffsetValue, 0);
   lcd.write(".");
 }
 
-void drawHappyFace(){
+void drawHappyFace(int horizontalOffsetValue){
   // clear screen
   lcd.clear();
 
@@ -221,11 +221,11 @@ void drawHappyFace(){
   lcd.write("w"); 
 
   // display happy left eye
-  lcd.setCursor(4, 0);
+  lcd.setCursor(4+horizontalOffsetValue, 0);
   lcd.write("^");
 
   // display happy right eye
-  lcd.setCursor(10, 0);
+  lcd.setCursor(10+horizontalOffsetValue, 0);
   lcd.write("^");
 }
 
@@ -239,13 +239,13 @@ void closeEyes(){
     lcd.write("               ");
 
     // display closed left eye
-    lcd.setCursor(4, 0);
+    lcd.setCursor(4+horizontalOffsetValue, 0);
     lcd.write("u");
 
     // display closed right eye
-    lcd.setCursor(10, 0);
+    lcd.setCursor(10+horizontalOffsetValue, 0);
     lcd.write("u");
-    lcd.setCursor(0, 0);
+    lcd.setCursor(0, 0); // can I delete this line?
     }
 }
 

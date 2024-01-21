@@ -24,13 +24,13 @@ while True:
     # ser.write(b'2') # user is happy/surprised
     # time.sleep(1) 
     # print('sent')
-    send_data(0, 5)
+    send_data(0, 6)
     print('sent 0,5')
     time.sleep(1)
-    send_data(1, 5)
+    send_data(1, 6)
     print('sent 1,5')
     time.sleep(1)
-    send_data(2, 5)
+    send_data(2, 6)
     print('sent 2,5')
     time.sleep(1) 
 

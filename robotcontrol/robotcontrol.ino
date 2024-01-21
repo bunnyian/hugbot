@@ -35,7 +35,7 @@ unsigned long previousReadStateMillis = 0;  // stores last time state was read (
 unsigned long previousBlinkMillis = 0; // stores last time eyes were blinked (in milliseconds)
 
 const long READ_STATE_INTERVAL = 4000; // interval at which to read state (in milliseconds) 
-const long BLINK_INTERVAL = 5333;  // interval at which to blink eyes (in milliseconds)
+const long BLINK_INTERVAL = 1999;  // interval at which to blink eyes (in milliseconds)
 
 // define variables for serial communication
 int incomingStateByte = 0;
@@ -75,21 +75,25 @@ void loop() {
 
     lcd.clear();
     if (stateValue == 0) {
-      lcd.print("hug time :(");
+      // lcd.print("hug time :(");
+      drawPleadingFace();
     } else if (stateValue == 1) {
-      lcd.print(":/");
+      // lcd.print(":/");
+      drawNeutralFace();
     } else if (stateValue == 2) {
-      lcd.print("dancy time");
+      // lcd.print("dancy time");
+      drawHappyFace();
     }
   }
 
   // check to see if it's time to blink
   if (currentMillis - previousBlinkMillis >= BLINK_INTERVAL) {
-    // save the last time we read state
+    // save the last time we blinked the eyes
     previousBlinkMillis = currentMillis;
 
-    lcd.clear();
-    lcd.print("blink!");
+    // lcd.clear();
+    // lcd.print("blink!");
+    blinkEyes();
   }
 
   
@@ -138,7 +142,7 @@ void loop() {
 }
 
 void drawPleadingFace(){
-  lcd.clear();
+
 
   // Display frowning mouth
   lcd.setCursor(7, 1);
@@ -159,7 +163,6 @@ void drawPleadingFace(){
 
 
 void drawNeutralFace(){
-  lcd.clear();
   
   // Display smiling mouth
   lcd.setCursor(7, 1);
@@ -175,7 +178,6 @@ void drawNeutralFace(){
 }
 
 void drawHappyFace(){
-  lcd.clear();
 
   // Display smiling mouth
   lcd.setCursor(7, 1);
@@ -193,18 +195,28 @@ void drawHappyFace(){
 void blinkEyes(){
   // only blink eyes 50% of the time to make it more natual
   int blinkChance = random(2);
-  if (blinkChance==1){ 
-    // Clear eyes 
+  // if (blinkChance==1){ 
+  if (blinkChance<10){ 
+    // clear eyes 
     lcd.setCursor(0, 0);
     lcd.write("               ");
 
-    // Display blinking left eye
+    // display closed left eye
     lcd.setCursor(4, 0);
     lcd.write("u");
 
-    // Display blinking right eye
+    // display closed right eye
     lcd.setCursor(10, 0);
     lcd.write("u");
-    lcd.setCursor(0, 0);  
+    lcd.setCursor(0, 0);
+
+    // // redraw old face
+    // if (stateValue == 0) {
+    //   drawPleadingFace();
+    // } else if (stateValue == 1) {
+    //   drawNeutralFace();
+    // } else if (stateValue == 2) {
+    //   drawHappyFace();
+    // }
   } 
 }

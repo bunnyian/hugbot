@@ -1,6 +1,6 @@
 X get hello world printed on lcd
 X get one-row heart eyes printed on lcd
-- [10min] get two-row 😍 face printed on lcd (for when user is happy)
+O [10min] get two-row 😍 face printed on lcd (for when user is happy)
 - [10min] get two-row ^_^ faace printed on lcd (for when user is neutral)
 - [10min] get two-row 🥺 face printed on lcd (for when user is sad/angry)
 - [15min] integrate with robotcontrol.io

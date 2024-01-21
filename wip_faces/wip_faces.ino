@@ -347,7 +347,7 @@ void setup() {
   lcd.write(byte(1));
   lcd.setCursor(12, 0);
   lcd.write(byte(2));
-  lcd.setCursor(13, 0);
+  lcd.setCursor(15, 0);
   lcd.write(byte(3));
   
   lcd.setCursor(10, 1);
@@ -356,7 +356,7 @@ void setup() {
   lcd.write(byte(5));
   lcd.setCursor(12, 1);
   lcd.write(byte(6));
-  lcd.setCursor(13, 1);
+  lcd.setCursor(15, 1);
   lcd.write(byte(7));
 
   

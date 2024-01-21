@@ -43,7 +43,7 @@ unsigned long previousBlinkStartedMillis = 0; // stores last time eyes were clos
 
 const long READ_BYTE_INTERVAL =
     500; // how long to wait in between reading incoming bytes (in milliseconds)
-const long STATE_DURATION = 10000; // how long to lock in the current state (in milliseconds), so that the hugging or propeller actions have enough time to complete
+const long STATE_DURATION = 4000; // how long to lock in the current state (in milliseconds), so that the hugging or propeller actions have enough time to complete
 const long BLINK_INTERVAL =
     5001; // how long to wait in between blinks (in milliseconds)
 const long BLINK_DURATION = 200;  // duration for which to keep eyes closed during a blink (in milliseconds)

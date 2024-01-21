@@ -5,8 +5,8 @@ import time
 
 
 #basic test program
-# ser = serial.Serial('/dev/tty.usbmodem2101', 9600) #the team arduino 
-ser = serial.Serial('/dev/cu.usbmodem1101', 9600) #anoop's arduino (just for testing)
+ser = serial.Serial('/dev/tty.usbmodem2101', 9600) #the team arduino 
+# ser = serial.Serial('/dev/cu.usbmodem1101', 9600) #anoop's arduino (just for testing)
 def send_data(state_index, horizontal_position):
     # Ensure the values are within the correct range
     if 0 <= state_index <= 2 and 0 <= horizontal_position <= 6:

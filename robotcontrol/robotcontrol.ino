@@ -31,6 +31,9 @@ void setup() {
   // initialize digital pin LED_BUILTIN as an output.
   pinMode(LED_BUILTIN, OUTPUT);
 
+  // Initialize random seed (for blinking eyes randomly)
+  randomSeed(analogRead(0));
+
   // create the pleading eye special characters
   lcd.createChar(0, pleadingEyeLeftHalf);
   lcd.createChar(1, pleadingEyeRightHalf);
@@ -50,35 +53,48 @@ void loop() {
     incomingByte = Serial.read();
     int value = incomingByte - '0';
 
+    int timeUntilBlink = random(1000);
+    
     // if user has a sad/disgusted/angry expression
     if (value == 0) {
-      lcd.clear();
       // lcd.print("hug time :(");
       drawPleadingFace();
-      delay(1000);
+      delay(timeUntilBlink);
+      blinkEyes();
+      delay(200);
+      drawPleadingFace();
+      delay(800-timeUntilBlink);
     }
 
     // if user has a neutral expression or if user is not detected
     else if (value == 1) {
-      lcd.clear();
       // lcd.print(":/");
       drawNeutralFace();
-      delay(1000);
+      delay(timeUntilBlink);
+      blinkEyes();
+      delay(200);
+      drawNeutralFace();
+      delay(800-timeUntilBlink);
     } 
 
     // if user has a happy/surprised expression
     else if (value == 2) {
-      lcd.clear();
       // lcd.print("dancy time");
       drawHappyFace();
-      delay(1000);
+      delay(timeUntilBlink);
+      blinkEyes();
+      delay(200);
+      drawHappyFace();
+      delay(800-timeUntilBlink);
     } 
-  }
+}
 
   delay(4000);
 }
 
 void drawPleadingFace(){
+  lcd.clear();
+
   // Display frowning mouth
   lcd.setCursor(7, 1);
   lcd.write("n");
@@ -98,6 +114,8 @@ void drawPleadingFace(){
 
 
 void drawNeutralFace(){
+  lcd.clear();
+  
   // Display smiling mouth
   lcd.setCursor(7, 1);
   lcd.write("w"); 
@@ -112,6 +130,8 @@ void drawNeutralFace(){
 }
 
 void drawHappyFace(){
+  lcd.clear();
+
   // Display smiling mouth
   lcd.setCursor(7, 1);
   lcd.write("w"); 
@@ -123,4 +143,21 @@ void drawHappyFace(){
   // Display happy right eye
   lcd.setCursor(10, 0);
   lcd.write("^");
+}
+
+void blinkEyes(){
+  // // Clear eyes (apparently this is faster than doing lcd.clear()
+  // lcd.setCursor(0, 0);
+  // lcd.write("               ");
+
+  lcd.clear();
+
+  // Display blinking left eye
+  lcd.setCursor(4, 0);
+  lcd.write("u");
+
+  // Display blinking right eye
+  lcd.setCursor(10, 0);
+  lcd.write("u");
+  lcd.setCursor(0, 0);  
 }

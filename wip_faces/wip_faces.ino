@@ -175,6 +175,15 @@ void setup() {
   lcd.setCursor(7, 1);
   lcd.write("w");
 
+  // Display neutral left eye
+  lcd.setCursor(3, 0);
+  lcd.write(".");
+
+  // Display neutral right eye
+  lcd.setCursor(11, 0);
+  lcd.write(".");
+
+
 
 
 //   // Display left eye

@@ -31,7 +31,7 @@ int recievedStateValue; // 0 = sad/disgusted/angry, 1 = neutral, 2 = happy/surpr
 int lockedInStateValue; // 0 = sad/disgusted/angry, 1 = neutral, 2 =
                         // happy/surprised. This is the value that is locked in so that we can safely take longer actions like hugging or spinning the propeller.
 int horizontalPositionByte; // from 0 to 6, where 0 is far left and 6 is far right.
-int horizontalOffsetValue;  // from -3 to 3, where -3 is far left and 3 is far
+int horizontalOffsetValue = 0;  // from -3 to 3, where -3 is far left and 3 is far
                            // right. 
 bool eyesCurrentlyClosed = false; // whether eyes are currently closed
 
@@ -140,7 +140,7 @@ void loop() {
   if ((currentMillis - previousBlinkStartedMillis >= BLINK_INTERVAL) && (!eyesCurrentlyClosed)) {
     // save the last time we closed eyes
     previousBlinkStartedMillis = currentMillis;
-    closeEyes();
+    closeEyes(horizontalOffsetValue);
 
     eyesCurrentlyClosed = true;
   }
@@ -216,11 +216,10 @@ void drawHappyFace(int horizontalOffsetValue){
   lcd.write("^");
 }
 
-void closeEyes(){
+void closeEyes(int horizontalOffsetValue){
   // only blink eyes 75% of the time, to make it more natural
   int blinkChance = random(4);
   if (blinkChance != 0){  // i.e, the 75% chance of blinking occured
-
     // clear eyes 
     lcd.setCursor(0, 0);
     lcd.write("               ");
@@ -232,7 +231,6 @@ void closeEyes(){
     // display closed right eye
     lcd.setCursor(10+horizontalOffsetValue, 0);
     lcd.write("u");
-    lcd.setCursor(0, 0); // can I delete this line?
     }
 }
 

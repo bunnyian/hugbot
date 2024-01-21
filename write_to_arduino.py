@@ -5,7 +5,7 @@ import time
 
 
 #basic test program
-# ser = serial.Serial('/dev/tty.usbmodem2101', 9600) #team arduino 
+# ser = serial.Serial('/dev/tty.usbmodem2101', 9600) #te ram arduino 
 ser = serial.Serial('/dev/cu.usbmodem1101', 9600) #anoop's arduino (just for testing)
 
 while True:

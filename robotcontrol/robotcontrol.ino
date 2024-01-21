@@ -57,33 +57,33 @@ void loop() {
     if (value == 0) {
       // lcd.print("hug time :(");
       drawPleadingFace();
-      // delay(timeUtilBlink);
+      delay (400);
       blinkEyes();
-      // delay(200);
-      delay (500);
+      delay (200);
       drawPleadingFace();
-      delay (300);
-      // delay(800-timeUntilBlink);
+      delay (400);
     }
 
     // if user has a neutral expression or if user is not detected
     else if (value == 1) {
       // lcd.print(":/");
       drawNeutralFace();
+      delay(400);
       blinkEyes();
-      delay(500);
+      delay (200);
       drawNeutralFace();
-      delay(300);
+      delay(400);
     } 
 
     // if user has a happy/surprised expression
     else if (value == 2) {
       // lcd.print("dancy time");
       drawHappyFace();
+      delay(400);
       blinkEyes();
-      delay(500);
+      delay (200);
       drawHappyFace();
-      delay(300);
+      delay(400);
     } 
 }
 
@@ -144,10 +144,9 @@ void drawHappyFace(){
 }
 
 void blinkEyes(){
-  // only blink eyes 33% of the time to make it more natual
-  int blinkChance = random(3);
-  // if (blinkChance==2){ 
-  if (blinkChance<10){ 
+  // only blink eyes 50% of the time to make it more natual
+  int blinkChance = random(2);
+  if (blinkChance==1){ 
     // Clear eyes 
     lcd.setCursor(0, 0);
     lcd.write("               ");

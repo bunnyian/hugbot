@@ -68,151 +68,19 @@ LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
 // 00000 00000 00000 00000 00000 00000     
 
 // Custom characters to create a heart shape
-byte heartTop1[8] = {
-  B00000,
-  B00001,
-  B00111,
-  B01111,
-  B01111,
-  B01111,
-  B00111,
-  B00001
-};
-
-byte heartTop2[8] = {
-  B01111,
-  B11111,
-  B11111,
-  B11111,
-  B11111,
-  B11111,
-  B11111,
-  B11111
-};
-
-byte heartTop3[8] = {
-  B00001,
-  B00111,
-  B01111,
-  B11111,
-  B11111,
-  B11111,
-  B11111,
-  B11111
-};
-
-byte heartTop4[8] = {
-  B01111,
-  B11111,
-  B11111,
-  B11111,
-  B11111,
-  B11111,
-  B00000,
-  B00000
-};
-
-byte heartTop5[8] = {
-  B11111,
-  B11111,
-  B11111,
-  B11111,
-  B11111,
-  B11111,
-  B11111,
-  B11111
-};
-
-byte heartTop6[8] = {
-  B00000,
-  B11000,
-  B11110,
-  B11111,
-  B11111,
-  B11111,
-  B11110,
-  B11000
-};
-
-byte heartBottom1[8] = {
-  B00111,
-  B11111,
-  B11111,
-  B11111,
-  B11111,
-  B11110,
-  B00000,
-  B00000
-};
-
-byte heartBottom2[8] = {
-  B00001,
-  B11111,
-  B11111,
-  B11111,
-  B11111,
-  B11000,
-  B00000,
-  B00000
-};
-
-byte heartBottom3[8] = {
-  B00000,
-  B11111,
-  B11111,
-  B11111,
-  B11111,
-  B00000,
-  B00000,
-  B00000
-};
-
-byte heartBottom4[8] = {
-  B00000,
-  B00111,
-  B11111,
-  B11110,
-  B00111,
-  B00000,
-  B00000,
-  B00000
-};
-
-byte heartBottom5[8] = {
-  B00000,
-  B00001,
-  B11111,
-  B11100,
-  B00001,
-  B00000,
-  B00000,
-  B00000
-};
-
-byte heartBottom6[8] = {
-  B00000,
-  B00000,
-  B11111,
-  B11000,
-  B00000,
-  B00000,
-  B00000,
-  B00000
-};
-
 // byte heartTop1[8] = {
-//   B11111,
-//   B11111,
-//   B11111,
-//   B11111,
-//   B11111,
-//   B11111,
-//   B11111,
-//   B11111
+//   B00000,
+//   B00001,
+//   B00111,
+//   B01111,
+//   B01111,
+//   B01111,
+//   B00111,
+//   B00001
 // };
 
 // byte heartTop2[8] = {
-//   B11111,
+//   B01111,
 //   B11111,
 //   B11111,
 //   B11111,
@@ -223,9 +91,9 @@ byte heartBottom6[8] = {
 // };
 
 // byte heartTop3[8] = {
-//   B11111,
-//   B11111,
-//   B11111,
+//   B00001,
+//   B00111,
+//   B01111,
 //   B11111,
 //   B11111,
 //   B11111,
@@ -234,14 +102,14 @@ byte heartBottom6[8] = {
 // };
 
 // byte heartTop4[8] = {
+//   B01111,
 //   B11111,
 //   B11111,
 //   B11111,
 //   B11111,
 //   B11111,
-//   B11111,
-//   B11111,
-//   B11111
+//   B00000,
+//   B00000
 // };
 
 // byte heartTop5[8] = {
@@ -256,26 +124,161 @@ byte heartBottom6[8] = {
 // };
 
 // byte heartTop6[8] = {
+//   B00000,
+//   B11000,
+//   B11110,
 //   B11111,
 //   B11111,
 //   B11111,
-//   B11111,
-//   B11111,
-//   B11111,
-//   B11111,
-//   B11111
+//   B11110,
+//   B11000
 // };
 
 // byte heartBottom1[8] = {
+//   B00111,
 //   B11111,
 //   B11111,
 //   B11111,
 //   B11111,
-//   B11111,
-//   B11111,
-//   B11111,
-//   B11111
+//   B11110,
+//   B00000,
+//   B00000
 // };
+
+// byte heartBottom2[8] = {
+//   B00001,
+//   B11111,
+//   B11111,
+//   B11111,
+//   B11111,
+//   B11000,
+//   B00000,
+//   B00000
+// };
+
+//byte heartBottom3[8] = {
+//  B00000,
+//  B11111,
+//  B11111,
+//  B11111,
+//  B11111,
+//  B00000,
+//  B00000,
+//  B00000
+//};
+//
+//byte heartBottom4[8] = {
+//  B00000,
+//  B00111,
+//  B11111,
+//  B11110,
+//  B00111,
+//  B00000,
+//  B00000,
+//  B00000
+//};
+//
+//byte heartBottom5[8] = {
+//  B00000,
+//  B00001,
+//  B11111,
+//  B11100,
+//  B00001,
+//  B00000,
+//  B00000,
+//  B00000
+//};
+//
+//byte heartBottom6[8] = {
+//  B00000,
+//  B00000,
+//  B11111,
+//  B11000,
+//  B00000,
+//  B00000,
+//  B00000,
+//  B00000
+//};
+
+// BLACKOUT TEST
+
+
+byte heartTop1[8] = {
+  B11111,
+  B11111,
+  B11111,
+  B11111,
+  B11111,
+  B11111,
+  B11111,
+  B11111
+};
+
+byte heartTop2[8] = {
+  B11111,
+  B11111,
+  B11111,
+  B11111,
+  B11111,
+  B11111,
+  B11111,
+  B11111
+};
+
+byte heartTop3[8] = {
+  B11111,
+  B11111,
+  B11111,
+  B11111,
+  B11111,
+  B11111,
+  B11111,
+  B11111
+};
+
+byte heartTop4[8] = {
+  B11111,
+  B11111,
+  B11111,
+  B11111,
+  B11111,
+  B11111,
+  B11111,
+  B11111
+};
+
+byte heartTop5[8] = {
+  B11111,
+  B11111,
+  B11111,
+  B11111,
+  B11111,
+  B11111,
+  B11111,
+  B11111
+};
+
+byte heartTop6[8] = {
+  B11111,
+  B11111,
+  B11111,
+  B11111,
+  B11111,
+  B11111,
+  B11111,
+  B11111
+};
+
+byte heartBottom1[8] = {
+  B11111,
+  B11111,
+  B11111,
+  B11111,
+  B11111,
+  B11111,
+  B11111,
+  B11111
+};
 
 // byte heartBottom2[8] = {
 //   B11111,
@@ -343,41 +346,43 @@ void setup() {
 
   lcd.createChar(6, heartBottom1);
   lcd.createChar(7, heartBottom2);
-  lcd.createChar(8, heartBottom3);
-  lcd.createChar(9, heartBottom4);
-  lcd.createChar(10, heartBottom5);
-  lcd.createChar(11, heartBottom6);
-
+//  lcd.createChar(8, heartBottom3);
+//  lcd.createChar(9, heartBottom4);
+//  lcd.createChar(10, heartBottom5);
+//  lcd.createChar(11, heartBottom6);
 
   // Set up the LCD's number of columns and rows
   lcd.begin(16, 2);
 
+  // Clear the LCD screen
+  lcd.clear();
+
   // Display the heart
-  lcd.setCursor(5, 0);  
+  lcd.setCursor(0, 0);
   lcd.write(byte(0));
-  lcd.setCursor(6, 0);  
+  lcd.setCursor(1, 0);
   lcd.write(byte(1));
-  lcd.setCursor(7, 0);  
+  lcd.setCursor(2, 0);
   lcd.write(byte(2));
-  lcd.setCursor(8, 0);  
+  lcd.setCursor(3, 0);
   lcd.write(byte(3));
-  lcd.setCursor(9, 0);  
+  lcd.setCursor(4, 0);
   lcd.write(byte(4));
-  lcd.setCursor(10, 0);  
+  lcd.setCursor(5, 0);
   lcd.write(byte(5));
 
-  lcd.setCursor(5, 1);  
+  lcd.setCursor(0, 1);
   lcd.write(byte(6));
-  lcd.setCursor(6, 1);  
+  lcd.setCursor(1, 1);
   lcd.write(byte(7));
-  lcd.setCursor(7, 1);  
-  lcd.write(byte(8));
-  lcd.setCursor(8, 1);  
-  lcd.write(byte(9));
-  lcd.setCursor(9, 1);  
-  lcd.write(byte(10));
-  lcd.setCursor(10, 1);  
-  lcd.write(byte(11));
+//  lcd.setCursor(2, 1);
+//  lcd.write(byte(8));
+//  lcd.setCursor(3, 1);
+//  lcd.write(byte(9));
+//  lcd.setCursor(4, 1);
+//  lcd.write(byte(10));
+//  lcd.setCursor(5, 1);
+//  lcd.write(byte(11));
 }
 
 void loop() {

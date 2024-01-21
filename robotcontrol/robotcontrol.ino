@@ -31,7 +31,7 @@ int recievedStateValue; // 0 = sad/disgusted/angry, 1 = neutral, 2 = happy/surpr
 int lockedInStateValue; // 0 = sad/disgusted/angry, 1 = neutral, 2 =
                         // happy/surprised. This is the value that is locked in so that we can safely take longer actions like hugging or spinning the propeller.
 int horizontalPositionByte; // from 0 to 6, where 0 is far left and 6 is far right.
-int horizontalOffsetValue;  // from -3 to 3, where -3 is far left and 3 is far
+int horizontalOffsetValue = 0;  // from -3 to 3, where -3 is far left and 3 is far
                            // right. 
 bool eyesCurrentlyClosed = false; // whether eyes are currently closed
 
@@ -43,7 +43,7 @@ unsigned long previousBlinkStartedMillis = 0; // stores last time eyes were clos
 
 const long READ_BYTE_INTERVAL =
     500; // how long to wait in between reading incoming bytes (in milliseconds)
-const long STATE_DURATION = 10000; // how long to lock in the current state (in milliseconds), so that the hugging or propeller actions have enough time to complete
+const long STATE_DURATION = 4000; // how long to lock in the current state (in milliseconds), so that the hugging or propeller actions have enough time to complete
 const long BLINK_INTERVAL =
     5001; // how long to wait in between blinks (in milliseconds)
 const long BLINK_DURATION = 200;  // duration for which to keep eyes closed during a blink (in milliseconds)
@@ -98,41 +98,41 @@ void loop() {
       drawPleadingFace(horizontalOffsetValue);
       hugUser();
 
-      // // just for debugging
-      // lcd.setCursor(0, 1);
-      // lcd.write("a");
+      // just for debugging
+      lcd.setCursor(0, 1);
+      lcd.write("a");
     } else if (lockedInStateValue == 1) { // user is neutral or not found in the frame
       drawNeutralFace(horizontalOffsetValue);
 
-      // // just for debugging
-      // lcd.setCursor(0, 1);
-      // lcd.write("b");
+      // just for debugging
+      lcd.setCursor(0, 1);
+      lcd.write("b");
     } else if (lockedInStateValue == 2) { // user is happy/surprised
       drawHappyFace(horizontalOffsetValue);
       spinPropeller();
 
-      // // just for debugging
-      // lcd.setCursor(0, 1);
-      // lcd.write("c");
+      // just for debugging
+      lcd.setCursor(0, 1);
+      lcd.write("c");
     }
 
-    // // just for debugging
-    // lcd.setCursor(1, 1);
-    // if (horizontalOffsetValue == -3) {
-    //   lcd.write("a");
-    // } else if (horizontalOffsetValue == -2) {
-    //   lcd.write("b");
-    // } else if (horizontalOffsetValue == -1) {
-    //   lcd.write("c");
-    // } else if (horizontalOffsetValue == 0) {
-    //   lcd.write("d");
-    // } else if (horizontalOffsetValue == 1) {
-    //   lcd.write("e");
-    // } else if (horizontalOffsetValue == 2) {
-    //   lcd.write("f");
-    // } else if (horizontalOffsetValue == 3) {
-    //   lcd.write("g");
-    // }
+    // just for debugging
+    lcd.setCursor(1, 1);
+    if (horizontalOffsetValue == -3) {
+      lcd.write("a");
+    } else if (horizontalOffsetValue == -2) {
+      lcd.write("b");
+    } else if (horizontalOffsetValue == -1) {
+      lcd.write("c");
+    } else if (horizontalOffsetValue == 0) {
+      lcd.write("d");
+    } else if (horizontalOffsetValue == 1) {
+      lcd.write("e");
+    } else if (horizontalOffsetValue == 2) {
+      lcd.write("f");
+    } else if (horizontalOffsetValue == 3) {
+      lcd.write("g");
+    }
     
   }
 
@@ -140,7 +140,7 @@ void loop() {
   if ((currentMillis - previousBlinkStartedMillis >= BLINK_INTERVAL) && (!eyesCurrentlyClosed)) {
     // save the last time we closed eyes
     previousBlinkStartedMillis = currentMillis;
-    closeEyes();
+    closeEyes(horizontalOffsetValue);
 
     eyesCurrentlyClosed = true;
   }
@@ -216,11 +216,10 @@ void drawHappyFace(int horizontalOffsetValue){
   lcd.write("^");
 }
 
-void closeEyes(){
+void closeEyes(int horizontalOffsetValue){
   // only blink eyes 75% of the time, to make it more natural
   int blinkChance = random(4);
   if (blinkChance != 0){  // i.e, the 75% chance of blinking occured
-
     // clear eyes 
     lcd.setCursor(0, 0);
     lcd.write("               ");
@@ -232,7 +231,6 @@ void closeEyes(){
     // display closed right eye
     lcd.setCursor(10+horizontalOffsetValue, 0);
     lcd.write("u");
-    lcd.setCursor(0, 0); // can I delete this line?
     }
 }
 

@@ -39,8 +39,8 @@ while True:
     
     send_data(state_num % 3, hor_pos % 6)
     print(state_num % 3, hor_pos % 6)
-    time.sleep(0.1)
-    hor_pos += 1
+    time.sleep(2)
+    # hor_pos += 1
     state_num += 1
 
     

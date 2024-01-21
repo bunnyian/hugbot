@@ -13,7 +13,7 @@ ser = serial.Serial('/dev/cu.usbmodem1101', 9600) #anoop's arduino (just for tes
 
 def send_data(state_index, horizontal_position):
     # Ensure the values are within the correct range
-    if 0 <= state_index <= 2 and 0 <= horizontal_position <= 6:
+    if (0 <= state_index <= 2) and (0 <= horizontal_position <= 6):
         # Encoding: assuming value1 uses the upper 3 bits and value2 uses the lower 5 bits
         encoded_byte = (state_index << 5) | horizontal_position
         ser.write(bytes([encoded_byte]))
@@ -39,7 +39,7 @@ def needs_hug():
         if len(emotions)!=0:
             img_post = fed.bounding_box(im,boxes_face,emotions)
             horizontal_position = int(((boxes_face[0][0] + boxes_face[0][2]) / 1400)*7)
-            print(horizontal_position)
+            print(horizontal_position - 3)
         else:
             img_post = im 
 
@@ -59,16 +59,19 @@ def needs_hug():
                     print('sending a!')
                     # ser.write(b'0') # user is sad/disgusted/angry
                     send_data(0, horizontal_position)
+                    time.sleep(0.1)
                     buffer.clear()
                 elif (max(state_0_count, state_1_count, state_2_count) == state_1_count):
                     print('sending b!')
                     # ser.write(b'1') # user is neutral / not in frame
                     send_data(1, horizontal_position)
+                    time.sleep(0.1)
                     buffer.clear()
                 else:
                     print('sending c!')
                     # ser.write(b'2')
                     send_data(2, horizontal_position)
+                    time.sleep(0.1)
                     buffer.clear()
         
         if cv2.waitKey(1) &0xFF == ord('q'):

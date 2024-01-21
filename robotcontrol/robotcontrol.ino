@@ -80,16 +80,28 @@ void loop() {
     incomingStateByte = Serial.read();
     stateValue = incomingStateByte - '0';
 
+    // lcd.setCursor(8, 1);
+    // lcd.write(stateValue);
+    // Serial.println(stateValue);
+    
     // take the appropriate actions based on the state
     if (stateValue == 0) { // user is sad/disgusted/angry
       drawPleadingFace();
       hugUser();
+      lcd.setCursor(0, 1);
+      lcd.write("a");
     } else if (stateValue == 1) { // user is neutral or not found in the frame
       drawNeutralFace();
+      lcd.setCursor(0, 1);
+      lcd.write("b");
     } else if (stateValue == 2) { // user is happy/surprised
       drawHappyFace();
       spinPropeller();
+      lcd.setCursor(0, 1);
+      lcd.write("c");
     }
+
+    
   }
 
   // check if it's time to close eyes for a blink
@@ -193,9 +205,9 @@ void closeEyes(){
 }
 
 void hugUser() {
-  // move arms to hug user
+  // activate arm motors to hug user
 }
 
 void spinPropeller() {
-  // spin propeller
+  // activate propellor motor to spin propeller
 }

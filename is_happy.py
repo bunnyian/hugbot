@@ -6,6 +6,11 @@ import argparse
 import time
 from collections import deque
 
+import serial
+
+# ser = serial.Serial('/dev/tty.usbmodem2101', 9600) #the team arduino 
+ser = serial.Serial('/dev/cu.usbmodem1101', 9600) #anoop's arduino (just for testing)
+
 def needs_hug():
     buffer = deque(maxlen=10)
 # instanciar detector
@@ -35,6 +40,11 @@ def needs_hug():
             if len(buffer) == 10:
                 if buffer.count('happy') + buffer.count('neutral') < 5:
                     print('Needs a hug')
+                    ser.write(b'0') # user is sad/disgusted/angry
+                    buffer.clear()
+                else:
+                    print('Neutral!')
+                    ser.write(b'1') # user is neutral / not in frame
                     buffer.clear()
         
         if cv2.waitKey(1) &0xFF == ord('q'):

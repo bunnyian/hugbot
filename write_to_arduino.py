@@ -5,18 +5,27 @@ import time
 
 
 #basic test program
-# ser = serial.Serial('/dev/tty.usbmodem2101', 9600) #te ram arduino 
+# ser = serial.Serial('/dev/tty.usbmodem2101', 9600) #the team arduino 
 ser = serial.Serial('/dev/cu.usbmodem1101', 9600) #anoop's arduino (just for testing)
 
 while True:
-    ser.write(b'0')
+    ser.write(b'0') # user is sad/disgusted/angry
     time.sleep(1)
-    ser.write(b'1')
+    ser.write(b'1') # user is neutral or not found in the frame
     time.sleep(1)
-    ser.write(b'2')
+    ser.write(b'2') # user is happy/surprised
     time.sleep(1) 
     print('sent')
     
+
+
+
+
+
+
+
+
+
     # yabal yabal yabal yabal 
     #yabal in korean means "i'm tired"
     #yabal in spanish means "i'm tired"

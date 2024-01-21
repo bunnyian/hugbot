@@ -30,12 +30,19 @@ B10000
 const int ledPin =  LED_BUILTIN; // set the number of the LED pin
 
 int stateValue; // 0 = sad/disgusted/angry, 1 = neutral, 2 = happy/surprised
+bool currentlyEyesClosed = false; // whether eyes are currently closed
 
+unsigned long currentMillis = 0; // stores current time (in milliseconds)
+                                 
 unsigned long previousReadStateMillis = 0;  // stores last time state was read (in milliseconds)
-unsigned long previousBlinkMillis = 0; // stores last time eyes were blinked (in milliseconds)
+unsigned long previousBlinkStartedMillis = 0; // stores last time eyes were closed (in milliseconds)
 
-const long READ_STATE_INTERVAL = 4000; // interval at which to read state (in milliseconds) 
-const long BLINK_INTERVAL = 1999;  // interval at which to blink eyes (in milliseconds)
+
+const long READ_STATE_INTERVAL = 4000; // interval at which to read state (in milliseconds)
+const long BLINK_INTERVAL =
+    1899; // interval at which to blink eyes (in milliseconds)
+const long BLINK_DURATION = 200;  // duration for which to keep eyes closed during a blink (in milliseconds)
+
 
 // define variables for serial communication
 int incomingStateByte = 0;
@@ -63,7 +70,7 @@ void setup() {
 // the loop function runs over and over again forever
 void loop() {
 
-  unsigned long currentMillis = millis();
+  currentMillis = millis();
 
   // check to see if it's time to read state
   if (currentMillis - previousReadStateMillis >= READ_STATE_INTERVAL) {
@@ -86,59 +93,34 @@ void loop() {
     }
   }
 
-  // check to see if it's time to blink
-  if (currentMillis - previousBlinkMillis >= BLINK_INTERVAL) {
-    // save the last time we blinked the eyes
-    previousBlinkMillis = currentMillis;
+  // check to see if it's time to start a blink by closing eyes
+  if ((currentMillis - previousBlinkStartedMillis >= BLINK_INTERVAL) && (!currentlyEyesClosed)) {
+    // save the last time we started a blink
+    previousBlinkStartedMillis = currentMillis;
 
     // lcd.clear();
     // lcd.print("blink!");
-    blinkEyes();
+    closeEyes();
+    currentlyEyesClosed = true;
   }
 
-  
+  // check to see if it's time to reopen eyes
+  if ((currentMillis - previousBlinkStartedMillis >= BLINK_DURATION) && (currentlyEyesClosed)) {
+    lcd.clear();
+    if (stateValue == 0) {
+      // lcd.print("hug time :(");
+      drawPleadingFace();
+    } else if (stateValue == 1) {
+      // lcd.print(":/");
+      drawNeutralFace();
+    } else if (stateValue == 2) {
+      // lcd.print("dancy time");
+      drawHappyFace();
+    }
+    currentlyEyesClosed = false;
+  }
 
-  
-//   // light up if serial 1 input
-//   if (Serial.available() > 0) {
-//     incomingByte = Serial.read();
-//     int value = incomingByte - '0';
-    
-//     // if user has a sad/disgusted/angry expression
-//     if (value == 0) {
-//       // lcd.print("hug time :(");
-//       drawPleadingFace();
-//       delay(400);
-//       blinkEyes();
-//       delay(200);
-//       drawPleadingFace();
-//       delay(400);
-//     }
 
-//     // if user has a neutral expression or if user is not detected
-//     else if (value == 1) {
-//       // lcd.print(":/");
-//       drawNeutralFace();
-//       delay(400);
-//       blinkEyes();
-//       delay(200);
-//       drawNeutralFace();
-//       delay(400);
-//     } 
-
-//     // if user has a happy/surprised expression
-//     else if (value == 2) {
-//       // lcd.print("dancy time");
-//       drawHappyFace();
-//       delay(400);
-//       blinkEyes();
-//       delay(200);
-//       drawHappyFace();
-//       delay(400);
-//     } 
-// }
-
-//   delay(4000);
 }
 
 void drawPleadingFace(){
@@ -192,8 +174,8 @@ void drawHappyFace(){
   lcd.write("^");
 }
 
-void blinkEyes(){
-  // only blink eyes 50% of the time to make it more natual
+void closeEyes(){
+  // only blink eyes 50% of the time, to make it more natural
   int blinkChance = random(2);
   // if (blinkChance==1){ 
   if (blinkChance<10){ 
@@ -210,13 +192,18 @@ void blinkEyes(){
     lcd.write("u");
     lcd.setCursor(0, 0);
 
-    // // redraw old face
-    // if (stateValue == 0) {
-    //   drawPleadingFace();
-    // } else if (stateValue == 1) {
-    //   drawNeutralFace();
-    // } else if (stateValue == 2) {
-    //   drawHappyFace();
-    // }
-  } 
+  //   // redraw old face after waiting 200 ms, without using a delay
+  //   while (currentMillis - previousBlinkStartedMillis < BLINK_DURATION) {
+  //     currentMillis = millis();
+  //   }
+  //   lcd.clear();
+    
+  //   if (stateValue == 0) {
+  //     drawPleadingFace();
+  //   } else if (stateValue == 1) {
+  //     drawNeutralFace();
+  //   } else if (stateValue == 2) {
+  //     drawHappyFace();
+    }
+   
 }

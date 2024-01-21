@@ -53,23 +53,23 @@ void loop() {
     // if user is has a sad/disgusted/angry expression
     if (value == 0) {
       lcd.clear();
-
       drawPleadingFace();
-
       delay(1000);
     }
 
     // if user is has a neutral expression or if user is not detected
     else if (value == 1) {
       lcd.clear();
-      lcd.print(":/");
+      // lcd.print(":/");
+      drawNeutralFace();
       delay(1000);
     } 
 
     // if user is has a happy/surprised expression
     else if (value == 2) {
       lcd.clear();
-      lcd.print("dancy time");
+      // lcd.print("dancy time");
+      drawHappyFace();
       delay(1000);
     } 
   }
@@ -78,19 +78,48 @@ void loop() {
 }
 
 void drawPleadingFace(){
-    // Display frowning mouth
-    lcd.setCursor(7, 1);
-    lcd.write("n");
+  // Display frowning mouth
+  lcd.setCursor(7, 1);
+  lcd.write("n");
 
-    // Display pleading left eye
-    lcd.setCursor(3, 0);
-    lcd.write(byte(0));
-    lcd.setCursor(4, 0);
-    lcd.write(byte(1));
-  
-    // Display pleading right eye
-    lcd.setCursor(10, 0);
-    lcd.write(byte(0));
-    lcd.setCursor(11, 0);
-    lcd.write(byte(1));
+  // Display pleading left eye
+  lcd.setCursor(3, 0);
+  lcd.write(byte(0));
+  lcd.setCursor(4, 0);
+  lcd.write(byte(1));
+
+  // Display pleading right eye
+  lcd.setCursor(10, 0);
+  lcd.write(byte(0));
+  lcd.setCursor(11, 0);
+  lcd.write(byte(1));
+}
+
+
+void drawNeutralFace(){
+  // Display happy mouth
+  lcd.setCursor(7, 1);
+  lcd.write("w"); 
+
+  // Display neutral left eye
+  lcd.setCursor(4, 0);
+  lcd.write(".");
+
+  // Display neutral right eye
+  lcd.setCursor(10, 0);
+  lcd.write(".");
+}
+
+void drawHappyFace(){
+  // Display happy mouth
+  lcd.setCursor(7, 1);
+  lcd.write("w"); 
+
+  // Display happy left eye
+  lcd.setCursor(4, 0);
+  lcd.write("^");
+
+  // Display happy right eye
+  lcd.setCursor(10, 0);
+  lcd.write("^");
 }

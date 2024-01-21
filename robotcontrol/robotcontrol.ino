@@ -33,15 +33,14 @@ int stateValue; // 0 = sad/disgusted/angry, 1 = neutral, 2 = happy/surprised
 bool currentlyEyesClosed = false; // whether eyes are currently closed
 
 unsigned long currentMillis = 0; // stores current time (in milliseconds)
-                                 
+     
 unsigned long previousReadStateMillis = 0;  // stores last time state was read (in milliseconds)
 unsigned long previousBlinkStartedMillis = 0; // stores last time eyes were closed (in milliseconds)
 
-const long READ_STATE_INTERVAL = 4000; // interval at which to read state (in milliseconds)
+const long READ_STATE_INTERVAL = 4000; // how long to wait in between reading incoming state (in milliseconds)
 const long BLINK_INTERVAL =
-    5001; // interval at which to blink eyes (in milliseconds)
+    5001; // how long to wait in between blinks (in milliseconds)
 const long BLINK_DURATION = 200;  // duration for which to keep eyes closed during a blink (in milliseconds)
-
 
 // define variables for serial communication
 int incomingStateByte = 0;
@@ -72,37 +71,42 @@ void loop() {
   // store the current time (in milliseconds)
   currentMillis = millis(); 
 
-  // check if it's time to read state
+  // check if it's time to read incoming state
   if (currentMillis - previousReadStateMillis >= READ_STATE_INTERVAL) {
-    // save the last time we read state
+    // save the last time we read the incoming state
     previousReadStateMillis = currentMillis;
 
     // read the incoming state byte
     incomingStateByte = Serial.read();
     stateValue = incomingStateByte - '0';
 
-    if (stateValue == 0) {
+    // take the appropriate actions based on the state
+    if (stateValue == 0) { // user is sad/disgusted/angry
       drawPleadingFace();
-    } else if (stateValue == 1) {
+      hugUser();
+    } else if (stateValue == 1) { // user is neutral or not found in the frame
       drawNeutralFace();
-    } else if (stateValue == 2) {
+    } else if (stateValue == 2) { // user is happy/surprised
       drawHappyFace();
+      spinPropeller();
     }
   }
 
-  // check to see if it's time to start a blink by closing eyes
-  if ((currentMillis - previousBlinkStartedMillis >= BLINK_INTERVAL) && (!currentlyEyesClosed)) {
-    // save the last time we started a blink
-    previousBlinkStartedMillis = currentMillis;
 
-    // lcd.clear();
-    // lcd.print("blink!");
+
+  // check to see if it's time to close eyes for a blink
+  if ((currentMillis - previousBlinkStartedMillis >= BLINK_INTERVAL) && (!currentlyEyesClosed)) {
+    // save the last time we closed eyes
+    previousBlinkStartedMillis = currentMillis;
     closeEyes();
+
     currentlyEyesClosed = true;
   }
 
-  // check to see if it's time to reopen eyes
+  // check to see if it's time to reopen eyes after the blink
   if ((currentMillis - previousBlinkStartedMillis >= BLINK_DURATION) && (currentlyEyesClosed)) {
+
+    // redraw the face based on the current state
     if (stateValue == 0) {
       drawPleadingFace();
     } else if (stateValue == 1) {
@@ -110,6 +114,7 @@ void loop() {
     } else if (stateValue == 2) {
       drawHappyFace();
     }
+
     currentlyEyesClosed = false;
   }
 }
@@ -188,3 +193,5 @@ void closeEyes(){
     lcd.setCursor(0, 0);
     }
 }
+
+void hugUser(){}

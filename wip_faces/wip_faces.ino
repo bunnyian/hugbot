@@ -60,13 +60,117 @@ LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
 // 00000 00001 10000 00000     
 // 00000 00000 00000 00000     
 // 00000 00000 00000 00000     
-// 00000 00000 00000 00000    
+// 00000 00000 00000 00000  
+
+
+ 
+
 
 // Custom characters to create a heart shape
-byte heartTop1[8] = {
-  B00001,
+// byte heartTop1[8] = {
+//   B00001,
+//   B00111,
+//   B01111,
+//   B11111,
+//   B11111,
+//   B11111,
+//   B01111,
+//   B00111
+// };
+
+// byte heartTop2[8] = {
+//   B11100,
+//   B11110,
+//   B11111,
+//   B11111,
+//   B11111,
+//   B11111,
+//   B11111,
+//   B11111
+// };
+
+// byte heartTop3[8] = {
+//   B00111,
+//   B01111,
+//   B11111,
+//   B11111,
+//   B11111,
+//   B11111,
+//   B11111,
+//   B11111
+// };
+
+// byte heartTop4[8] = {
+//   B10000,
+//   B11100,
+//   B11110,
+//   B11111,
+//   B11111,
+//   B11111,
+//   B11110,
+//   B11100
+// };
+
+// byte heartBottom1[8] = {
+//   B00001,
+//   B00000,
+//   B00000,
+//   B00000,
+//   B00000,
+//   B00000,
+//   B00000,
+//   B00000
+// };
+
+// byte heartBottom2[8] = {
+//   B11111,
+//   B11111,
+//   B01111,
+//   B00011,
+//   B00001,
+//   B00000,
+//   B00000,
+//   B00000
+// };
+
+// byte heartBottom3[8] = {
+//  B11111,
+//  B11111,
+//  B11110,
+//  B11000,
+//  B10000,
+//  B00000,
+//  B00000,
+//  B00000
+// };
+
+// byte heartBottom4[8] = {
+//  B10000,
+//  B00000,
+//  B00000,
+//  B00000,
+//  B00000,
+//  B00000,
+//  B00000,
+//  B00000
+// };
+
+// 4 byte pleading eye!
+
+// 00111 10000 11111 11111     
+// 01111 11000 11111 11111     
+// 11111 11100 11111 11111     
+// 11111 11100 11111 11111     
+// 11111 11100 11111 11111     
+// 11111 11100 11111 11111     
+// 01111 11000 11111 11111     
+// 00111 10000 11111 11111  
+
+
+byte pleadTop1[8] = {
   B00111,
   B01111,
+  B11111,
   B11111,
   B11111,
   B11111,
@@ -74,96 +178,58 @@ byte heartTop1[8] = {
   B00111
 };
 
-byte heartTop2[8] = {
-  B11100,
-  B11110,
-  B11111,
-  B11111,
-  B11111,
-  B11111,
-  B11111,
-  B11111
-};
-
-byte heartTop3[8] = {
-  B00111,
-  B01111,
-  B11111,
-  B11111,
-  B11111,
-  B11111,
-  B11111,
-  B11111
-};
-
-byte heartTop4[8] = {
+byte pleadTop2[8] = {
   B10000,
+  B11000,
   B11100,
-  B11110,
-  B11111,
-  B11111,
-  B11111,
-  B11110,
-  B11100
+  B11100,
+  B11100,
+  B11100,
+  B11000,
+  B10000
 };
 
-byte heartBottom1[8] = {
-  B00001,
-  B00000,
-  B00000,
-  B00000,
-  B00000,
-  B00000,
-  B00000,
-  B00000
-};
-
-byte heartBottom2[8] = {
+byte pleadTop3[8] = {
   B11111,
   B11111,
-  B01111,
-  B00011,
-  B00001,
-  B00000,
-  B00000,
-  B00000
+  B11111,
+  B11111,
+  B11111,
+  B11111,
+  B11111,
+  B11111
 };
 
-byte heartBottom3[8] = {
- B11111,
- B11111,
- B11110,
- B11000,
- B10000,
- B00000,
- B00000,
- B00000
+byte pleadTop4[8] = {
+  B11111,
+  B11111,
+  B11111,
+  B11111,
+  B11111,
+  B11111,
+  B11111,
+  B11111
 };
 
-byte heartBottom4[8] = {
- B10000,
- B00000,
- B00000,
- B00000,
- B00000,
- B00000,
- B00000,
- B00000
-};
 
 
 
 void setup() {
   // Create the custom characters
-  lcd.createChar(0, heartTop1);
-  lcd.createChar(1, heartTop2);
-  lcd.createChar(2, heartTop3);
-  lcd.createChar(3, heartTop4);
+  // lcd.createChar(0, heartTop1);
+  // lcd.createChar(1, heartTop2);
+  // lcd.createChar(2, heartTop3);
+  // lcd.createChar(3, heartTop4);
 
-  lcd.createChar(4, heartBottom1);
-  lcd.createChar(5, heartBottom2);
-  lcd.createChar(6, heartBottom3);
-  lcd.createChar(7, heartBottom4);
+  // lcd.createChar(4, heartBottom1);
+  // lcd.createChar(5, heartBottom2);
+  // lcd.createChar(6, heartBottom3);
+  // lcd.createChar(7, heartBottom4);
+
+  lcd.createChar(0, pleadTop1);
+  lcd.createChar(1, pleadTop2);
+  lcd.createChar(2, pleadTop3);
+  lcd.createChar(3, pleadTop4);
 
   // Set up the LCD's number of columns and rows
   lcd.begin(16, 2);
@@ -175,18 +241,32 @@ void setup() {
   lcd.setCursor(7, 1);
   lcd.write("w");
 
-  // Display neutral left eye
+  // // Display neutral left eye
+  // lcd.setCursor(3, 0);
+  // lcd.write(".");
+
+  // // Display neutral right eye
+  // lcd.setCursor(11, 0);
+  // lcd.write(".");
+
+
+  // Display plead left eye
   lcd.setCursor(3, 0);
-  lcd.write(".");
+  lcd.write(byte(0));
+  lcd.setCursor(4, 0);
+  lcd.write(byte(1));
+ 
 
-  // Display neutral right eye
+   // Display plead right eye
+  lcd.setCursor(10, 0);
+  lcd.write(byte(0));
   lcd.setCursor(11, 0);
-  lcd.write(".");
+  lcd.write(byte(1));
 
 
 
 
-//   // Display left eye
+//   // Display heart left eye
 //   lcd.setCursor(1, 0);
 //   lcd.write(byte(0));
 //   lcd.setCursor(2, 0);
@@ -207,7 +287,7 @@ void setup() {
 //   lcd.write(byte(7));
 
 
-//  // Display right eye
+//  // Display heart right eye
 //   lcd.setCursor(10, 0);
 //   lcd.write(byte(0));
 //   lcd.setCursor(11, 0);
@@ -235,4 +315,4 @@ void loop() {
   
 }
 
-// 0 (1 2 |3| 4) 5 6 w 8 9 (10 |11| 12 13) 14 15
+// 0 1 2 (|3| 4) 5 6 w 8 9 (10 |11|) 12 13 14 15

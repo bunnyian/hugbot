@@ -320,58 +320,54 @@ void setup() {
   lcd.clear();
 
   // Display left eye
-  lcd.setCursor(3, 0);
+  lcd.setCursor(1, 0);
   lcd.write(byte(0));
-  lcd.setCursor(4, 0);
+  lcd.setCursor(2, 0);
   lcd.write(byte(1));
-  lcd.setCursor(5, 0);
+  lcd.setCursor(3, 0);
   lcd.write(byte(2));
-  lcd.setCursor(6, 0);
+  lcd.setCursor(4, 0);
   lcd.write(byte(3));
   
 
-  lcd.setCursor(3, 1);
+  lcd.setCursor(1, 1);
   lcd.write(byte(4));
-  lcd.setCursor(4, 1);
+  lcd.setCursor(2, 1);
   lcd.write(byte(5));
-  lcd.setCursor(5, 1);
+  lcd.setCursor(3, 1);
   lcd.write(byte(6));
-  lcd.setCursor(6, 1);
+  lcd.setCursor(4, 1);
   lcd.write(byte(7));
 
 
  // Display right eye
-  lcd.setCursor(9, 0);
-  lcd.write(byte(0));
   lcd.setCursor(10, 0);
-  lcd.write(byte(1));
+  lcd.write(byte(0));
   lcd.setCursor(11, 0);
-  lcd.write(byte(2));
+  lcd.write(byte(1));
   lcd.setCursor(12, 0);
+  lcd.write(byte(2));
+  lcd.setCursor(13, 0);
   lcd.write(byte(3));
   
-  lcd.setCursor(9, 1);
-  lcd.write(byte(4));
   lcd.setCursor(10, 1);
-  lcd.write(byte(5));
+  lcd.write(byte(4));
   lcd.setCursor(11, 1);
-  lcd.write(byte(6));
+  lcd.write(byte(5));
   lcd.setCursor(12, 1);
+  lcd.write(byte(6));
+  lcd.setCursor(13, 1);
   lcd.write(byte(7));
 
 // Display mouth
   lcd.setCursor(7, 1);
-  lcd.write("u");
-//  lcd.setCursor(8, 1);
-//  lcd.write("v");
-
-
+  lcd.write("w");
 
 }
 
 void loop() {
   // Add code here for any dynamic behavior (optional)
+  
 }
 
-// 0 1 2 3 4 5 6 |7 8| 9 10 11 12 13 14 15
-// so its 3 4 5 6, and 9 10 11 12
+// 0 (1 2 3 4) 5 6 w 8 9 (10 11 12 13) 14 15

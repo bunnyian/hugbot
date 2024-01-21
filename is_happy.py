@@ -28,6 +28,8 @@ def needs_hug():
         # visualizacion
         if len(emotions)!=0:
             img_post = fed.bounding_box(im,boxes_face,emotions)
+            offset = int(((boxes_face[0][0] + boxes_face[0][2]) / 1400)*7) - 3
+            print(offset)
         else:
             img_post = im 
 
@@ -43,7 +45,6 @@ def needs_hug():
                 state_2_count = buffer.count('happy') + buffer.count('surprise') 
 
 
-                # if buffer.count('happy') + buffer.count('neutral') < 5:
                 if (max(state_0_count, state_1_count, state_2_count) == state_0_count):
                     print('sending a!')
                     ser.write(b'0') # user is sad/disgusted/angry

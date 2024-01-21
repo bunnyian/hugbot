@@ -20,12 +20,6 @@ while True:
 
 
 
-
-
-
-
-
-
     # yabal yabal yabal yabal 
     #yabal in korean means "i'm tired"
     #yabal in spanish means "i'm tired"

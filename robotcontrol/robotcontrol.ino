@@ -1,5 +1,6 @@
 #include <LiquidCrystal.h>
 
+// initialize the lcd library with the numbers of the interface pins
 const int rs = 12, en = 11, d4 = 5, d5 = 4, d6 = 3, d7 = 2;
 LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
 
@@ -26,36 +27,38 @@ B10000,
 B10000
 };
 
-const int ledPin =  LED_BUILTIN;// the number of the LED pin
+const int ledPin =  LED_BUILTIN; // set the number of the LED pin
 
-int ledState = LOW;             // ledState used to set the LED
 int stateValue; // 0 = sad/disgusted/angry, 1 = neutral, 2 = happy/surprised
 
-unsigned long previousReadStateMillis = 0;        // will store last time state was read
-unsigned long previousBlinkMillis = 0;        // will store last time state was read
+unsigned long previousReadStateMillis = 0;  // stores last time state was read (in milliseconds)
+unsigned long previousBlinkMillis = 0; // stores last time eyes were blinked (in milliseconds)
 
 const long READ_STATE_INTERVAL = 4000; // interval at which to read state (in milliseconds) 
-const long BLINK_INTERVAL = 5333;           // interval at which to blink eyes (in milliseconds)
+const long BLINK_INTERVAL = 5333;  // interval at which to blink eyes (in milliseconds)
+
+// define variables for serial communication
+int incomingStateByte = 0;
 
 
-// the setup function runs once when you press reset or power the board
 void setup() {
   // initialize digital pin LED_BUILTIN as an output.
   pinMode(ledPin, OUTPUT);
 
-  // Initialize random seed (for blinking eyes randomly)
+  // initialize random seed (for blinking eyes randomly)
   randomSeed(analogRead(0));
 
   // create the pleading eye special characters
   lcd.createChar(0, pleadingEyeLeftHalf);
   lcd.createChar(1, pleadingEyeRightHalf);
 
+  // set up the LCD's dimensions:
   lcd.begin(16, 2);
 
+  // set data rate for serial communication
   Serial.begin(9600);
 }
 
-int incomingByte = 0;
 
 // the loop function runs over and over again forever
 void loop() {
@@ -67,8 +70,8 @@ void loop() {
     // save the last time we read state
     previousReadStateMillis = currentMillis;
 
-    incomingByte = Serial.read();
-    stateValue = incomingByte - '0';
+    incomingStateByte = Serial.read();
+    stateValue = incomingStateByte - '0';
 
     lcd.clear();
     if (stateValue == 0) {

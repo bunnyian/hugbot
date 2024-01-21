@@ -32,8 +32,11 @@ int lockedInStateValue; // 0 = sad/disgusted/angry, 1 = neutral, 2 =
                         // happy/surprised. This is the value that is locked in so that we can safely take longer actions like hugging or spinning the propeller.
 int horizontalPositionByte; // from 0 to 6, where 0 is far left and 6 is far right.
 int horizontalOffsetValue = 0;  // from -3 to 3, where -3 is far left and 3 is far
-                           // right. 
+                           // right.
 bool eyesCurrentlyClosed = false; // whether eyes are currently closed
+bool currentlyHugging = false; // whether bot is in the middle of a hug
+bool currentlyPropelling = false; // whether bot is in the middle of a propeller spin
+
 
 unsigned long currentMillis = 0; // stores current time (in milliseconds)
 unsigned long previousReadByteMillis = 0; // stores last time byte was read (in
@@ -101,8 +104,10 @@ void loop() {
     // take the appropriate actions based on the state
     if (lockedInStateValue == 0) { // user is sad/disgusted/angry
       drawPleadingFace(horizontalOffsetValue);
-      hugUser();
-
+      if (!currentlyHugging) {
+        hugUser();
+        currentlyHugging = true;
+      }
       // // just for debugging
       // lcd.setCursor(0, 1);
       // lcd.write("a");
@@ -114,8 +119,11 @@ void loop() {
       // lcd.write("b");
     } else if (lockedInStateValue == 2) { // user is happy/surprised
       drawHappyFace(horizontalOffsetValue);
-      spinPropeller();
 
+      if (!currentlyPropelling) {
+        spinPropeller();
+        currentlyPropelling = true;
+      }
       // // just for debugging
       // lcd.setCursor(0, 1);
       // lcd.write("c");
@@ -242,10 +250,12 @@ void closeEyes(int myHorizontalOffsetValue){
 
 // the following two functions are currently set to take 4000 ms each to complete. if you need more time, just go to line 46 and increase the STATE_DURATION value!
 
-void hugUser() { 
+void hugUser() {
   // activate arm motors to hug user
+  currentlyHugging = false;
 }
 
-void spinPropeller() { 
+void spinPropeller() {
   // activate propellor motor to spin propeller
+  currentlySpinning = false;
 }

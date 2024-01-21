@@ -67,6 +67,27 @@ LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
 // 00000 00000 00000 00000 00000 00000     
 // 00000 00000 00000 00000 00000 00000     
 
+
+
+
+// 0000 01111 11000 00001 11111 00000     
+// 0001 11111 11110 00111 11111 11000     
+// 0111 11111 11111 01111 11111 11110     
+// 1111 11111 11111 11111 11111 11111     
+// 1111 11111 11111 11111 11111 11111     
+// 1111 11111 11111 11111 11111 11111     
+// 0111 11111 11111 11111 11111 11110     
+// 0001 11111 11111 11111 11111 11000  
+//   
+// 0000 01111 11111 11111 11111 00000     
+// 0000 00011 11111 11111 11100 00000     
+// 0000 00000 11111 11111 10000 00000     
+// 0000 00000 00111 11110 00000 00000     
+// 0000 00000 00001 11000 00000 00000     
+// 0000 00000 00000 10000 00000 00000     
+// 0000 00000 00000 00000 00000 00000     
+// 0000 00000 00000 00000 00000 00000    
+
 // Custom characters to create a heart shape
 byte heartTop1[8] = {
   B00000,
@@ -322,14 +343,25 @@ void setup() {
   lcd.write(byte(6));
   lcd.setCursor(1, 1);
   lcd.write(byte(7));
-//  lcd.setCursor(2, 1);
-//  lcd.write(byte(8));
-//  lcd.setCursor(3, 1);
-//  lcd.write(byte(9));
-//  lcd.setCursor(4, 1);
-//  lcd.write(byte(10));
-//  lcd.setCursor(5, 1);
-//  lcd.write(byte(11));
+
+ // Display heart 2
+  lcd.setCursor(8, 0);
+  lcd.write(byte(0));
+  lcd.setCursor(9, 0);
+  lcd.write(byte(1));
+  lcd.setCursor(10, 0);
+  lcd.write(byte(2));
+  lcd.setCursor(11, 0);
+  lcd.write(byte(3));
+  lcd.setCursor(12, 0);
+  lcd.write(byte(4));
+  lcd.setCursor(13, 0);
+  lcd.write(byte(5));
+
+  lcd.setCursor(8, 1);
+  lcd.write(byte(6));
+  lcd.setCursor(9, 1);
+  lcd.write(byte(7));
 }
 
 void loop() {

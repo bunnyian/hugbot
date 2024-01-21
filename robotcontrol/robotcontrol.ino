@@ -108,19 +108,26 @@ void loop() {
     if (stateValue == 0) { // user is sad/disgusted/angry
       drawPleadingFace();
       hugUser();
+
+      // just for debugging
       lcd.setCursor(0, 1);
       lcd.write("a");
     } else if (stateValue == 1) { // user is neutral or not found in the frame
       drawNeutralFace();
+
+      // just for debugging
       lcd.setCursor(0, 1);
       lcd.write("b");
     } else if (stateValue == 2) { // user is happy/surprised
       drawHappyFace();
       spinPropeller();
+
+      // just for debugging
       lcd.setCursor(0, 1);
       lcd.write("c");
     }
 
+    // just for debugging
     lcd.setCursor(1, 1);
     if (horizontalOffsetValue == -3) {
       lcd.write("a");

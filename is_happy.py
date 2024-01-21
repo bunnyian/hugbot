@@ -11,6 +11,16 @@ import serial
 # ser = serial.Serial('/dev/tty.usbmodem2101', 9600) #the team arduino 
 ser = serial.Serial('/dev/cu.usbmodem1101', 9600) #anoop's arduino (just for testing)
 
+def send_data(state_index, horizontal_position):
+    # Ensure the values are within the correct range
+    if 0 <= state_index <= 2 and 0 <= horizontal_position <= 6:
+        # Encoding: assuming value1 uses the upper 3 bits and value2 uses the lower 5 bits
+        encoded_byte = (state_index << 5) | horizontal_position
+        ser.write(bytes([encoded_byte]))
+    else:
+        print("Values out of range")
+
+
 def needs_hug():
     buffer = deque(maxlen=10)
 # instanciar detector
@@ -64,14 +74,6 @@ def needs_hug():
         if cv2.waitKey(1) &0xFF == ord('q'):
             break
 
-def send_data(state_index, horizontal_position):
-    # Ensure the values are within the correct range
-    if 0 <= state_index <= 2 and 0 <= horizontal_position <= 6:
-        # Encoding: assuming value1 uses the upper 3 bits and value2 uses the lower 5 bits
-        encoded_byte = (state_index << 5) | horizontal_position
-        ser.write(bytes([encoded_byte]))
-    else:
-        print("Values out of range")
 
 
 # labels = ['angry','disgust','fear','happy','neutral','sad','surprise']

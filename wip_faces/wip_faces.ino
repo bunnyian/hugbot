@@ -21,6 +21,7 @@
 // with the arduino pin number it is connected to
 const int rs = 12, en = 11, d4 = 5, d5 = 4, d6 = 3, d7 = 2;
 LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
+int eyes_offset = 0;
 
 
 // 00000 01111 11000 00001 11111 00000     
@@ -238,32 +239,44 @@ void setup() {
   // Clear the LCD screen
   lcd.clear();
 
-  // Display mouth
+  // Display w mouth
   lcd.setCursor(7, 1);
-  // lcd.write("w"); 
-  lcd.write("n");
+  lcd.write("w"); 
 
-  // // Display neutral left eye
+  // / Display n mouth
+  // lcd.setCursor(7, 1);
+  // lcd.write("n");
+
+  // Display neutral left eye
+  lcd.setCursor(4+eyes_offset, 0);
+  lcd.write(".");
+
+  // Display neutral right eye
+  lcd.setCursor(10+eyes_offset, 0);
+  lcd.write(".");
+
+  // // Display happy left eye
+  // lcd.setCursor(4+eyes_offset, 0);
+  // lcd.write("^");
+
+  // // Display happy right eye
+  // lcd.setCursor(10+eyes_offset, 0);
+  // lcd.write("^");
+
+
+
+  // // Display plead left eye
   // lcd.setCursor(3, 0);
-  // lcd.write(".");
-
-  // // Display neutral right eye
-  // lcd.setCursor(11, 0);
-  // lcd.write(".");
-
-
-  // Display plead left eye
-  lcd.setCursor(3, 0);
-  lcd.write(byte(0));
-  lcd.setCursor(4, 0);
-  lcd.write(byte(1));
+  // lcd.write(byte(0));
+  // lcd.setCursor(4, 0);
+  // lcd.write(byte(1));
  
 
-   // Display plead right eye
-  lcd.setCursor(10, 0);
-  lcd.write(byte(0));
-  lcd.setCursor(11, 0);
-  lcd.write(byte(1));
+  // // Display plead right eye
+  // lcd.setCursor(10, 0);
+  // lcd.write(byte(0));
+  // lcd.setCursor(11, 0);
+  // lcd.write(byte(1));
 
 
 
@@ -314,7 +327,22 @@ void setup() {
 
 void loop() {
   // Add code here for any dynamic behavior (optional)
+   eyes_offset = -2;
+
+  // Clear the top row
+  lcd.setCursor(0,0);
+  lcd.print("                ");
+
+  // Display neutral left eye
+  lcd.setCursor(4+eyes_offset, 0);
+  lcd.write(".");
+
+  // Display neutral right eye
+  lcd.setCursor(10+eyes_offset, 0);
+  lcd.write(".");
+
+  delay(1);
   
 }
 
-// 0 1 2 (|3| 4) 5 6 w 8 9 (10 |11|) 12 13 14 15
+// 0 1 2 (3 |4|) 5 6 w 8 9 (|10| 11) 12 13 14 15
